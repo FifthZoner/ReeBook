@@ -1,14 +1,22 @@
 const express = require('express')
 const mongoose = require('mongoose');
-const app = express()
-const port = 3000
+const cors = require('cors');
 
-app.get('/', (req, res) => res.send('It works (now 😖)'));
+const app = express()
+app.use(cors());
+const port = 5000
+
+app.get("/api",(req, res) =>{
+
+  res.json({"test": ["api"]});
+
+})
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`)
 })
 
+app.get('/api', (req, res) => res.send('api test'));
 
 const uri = "mongodb+srv://szyfzjablonski:WGKpI7la2AEKt2jB@reebook.qpahs0e.mongodb.net/?retryWrites=true&w=majority&appName=ReeBook";
 
