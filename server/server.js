@@ -1,11 +1,17 @@
 const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose');
+const session = require('express-session')
 const cors = require('cors');
+
 
 const app = express()
 app.use(cors());
 const port = 5000
+
+app.use(session({secret: "whatdoIwriteherepleasetellmetutorials", resave: true, saveUninitialized: true}))
+
+require('./auth.js')(app);
 
 app.get("/api",(req, res) =>{
 
