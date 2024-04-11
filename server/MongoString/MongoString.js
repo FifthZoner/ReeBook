@@ -1,0 +1,1 @@
+export const uri = "mongodb+srv://szyfzjablonski:WGKpI7la2AEKt2jB@reebook.qpahs0e.mongodb.net/?retryWrites=true&w=majority&appName=ReeBook";
