@@ -1,5 +1,4 @@
-import { uri } from "MongoString/MongoString.js"
-
+const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -20,7 +19,7 @@ app.listen(port, () => {
 
 app.get('/api', (req, res) => res.send('api test'));
 
-const uri = "mongodb+srv://szyfzjablonski:WGKpI7la2AEKt2jB@reebook.qpahs0e.mongodb.net/?retryWrites=true&w=majority&appName=ReeBook";
+const uri = process.env.MONGO_STRING
 
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
