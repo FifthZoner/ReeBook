@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import ButtonUsage from './ui/button'
+import Footer from './ui/footer'
 import SignInSide from './pages/signIn'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   return (
       <h1>
         <SignInSide />
+        <Footer />
       </h1> 
   )
 }
