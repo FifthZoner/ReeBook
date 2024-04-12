@@ -18,7 +18,7 @@ export default function loginCard(){
         event.preventDefault();
       };
     return(
-    <div className="bg-slate-600 w-96 text-white p-12">
+    <div>
         <form action="">
           <h1 className="text-5xl text-center">Login</h1>
           <div className="w-full my-10 flex items-center">

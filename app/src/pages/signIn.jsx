@@ -1,5 +1,6 @@
 import * as React from 'react';
 import LoginCard from '../cards/loginCard';
+import Book3dCard from '../cards/book3dCard';
 
 function Copyright(props) {
   return (
@@ -31,8 +32,15 @@ export default function SignInSide() {
   };
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-zinc-800'>
-      <LoginCard />
+    <div className='flex flex-wrap justify-center items-center min-h-screen bg-zinc-800'>
+      <div className="bg-slate-700 text-white px-12 flex flex-wrap justify-center items-center rounded-3xl">
+        <div>
+          <Book3dCard />
+        </div>
+        <div>
+          <LoginCard />
+        </div>
+      </div>
     </div>
   );
 }
