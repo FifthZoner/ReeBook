@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import ButtonUsage from './ui/button'
 import Footer from './ui/footer'
+import Hero from './ui/hero'
 import SignInSide from './pages/signIn'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
 
   return (
       <h1>
+        <Hero />
         <SignInSide />
         <Footer />
       </h1> 
