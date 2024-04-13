@@ -1,4 +1,6 @@
-const UserSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
     credentials: {
         email: {
             type: String,
@@ -26,4 +28,4 @@ const UserSchema = new mongoose.Schema({
     },
 });
 
-module.exports = {UserSchema};
+module.exports = {userSchema};

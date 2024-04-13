@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const schemas = require('./schemas.js');
 
 const uri = process.env.MONGO_STRING
 
@@ -12,7 +13,15 @@ async function run() {
         console.log("ReeBook backend is now successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
-        await mongoose.disconnect();
+        //await mongoose.disconnect();
     }
 }
 run().catch(console.dir);
+
+const UserEntry = mongoose.model('users', schemas.userSchema);
+
+module.exports = {UserEntry};
+
+
+const newUser = new UserEntry({"credentials.email" : "test email", "credentials.nickname" : "test nick", "credentials.passwordHash" : "test password"});
+newUser.save();
