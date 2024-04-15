@@ -13,7 +13,7 @@ const Hero = () => {
   return (
     <div
       style={heroImg}
-      className=" min-h-screen max-h-screen bg-black bg-opacity-60 bg-blend-darken flex flex-wrap"
+      className=" min-h-screen bg-black bg-opacity-60 bg-blend-darken flex flex-wrap"
     >
       <div className=" lg:w-2/3 lg:p-40 flex flex-col justify-center items-center mx-auto">
         <h1 className=" text-[4rem] font-bold text-white my-2">ReeBook</h1>
