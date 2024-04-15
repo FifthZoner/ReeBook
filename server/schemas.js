@@ -4,7 +4,8 @@ const userSchema = new mongoose.Schema({
     credentials: {
         email: {
             type: String,
-            required: [true, 'User must have an email']
+            required: [true, 'User must have an email'],
+            unique: true
         },
         nickname: {
             type: String,

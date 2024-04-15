@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const schemas = require('./schemas.js');
+const dotenv = require('dotenv').config()
 
 const uri = process.env.MONGO_STRING
 
@@ -23,5 +24,5 @@ const UserEntry = mongoose.model('users', schemas.userSchema);
 module.exports = {UserEntry};
 
 
-const newUser = new UserEntry({"credentials.email" : "test email", "credentials.nickname" : "test nick", "credentials.passwordHash" : "test password"});
-newUser.save();
+//const newUser = new UserEntry({"credentials.email" : "test email", "credentials.nickname" : "test nick", "credentials.passwordHash" : "test password"});
+//newUser.save();
