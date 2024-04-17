@@ -12,15 +12,22 @@ module.exports = function(app) {
 
     app.post("/api/login", bodyParser.json(), async(req, res) => {
         try {
-            console.log("Login request:\n", req.body);
             const { email, passwordHash } = req.body;
-            const user = await UserEntry.findOne({"email" : email, "passwordHash" : passwordHash});
-            req.session.userId = user["_id"];
-            res.redirect('/');
+            console.log("Login request:\n", email, passwordHash);
+            const user = await UserEntry.findOne({"credentials.email" : email, "credentials.passwordHash" : passwordHash});
+            console.log(user);
+            if (user == null) {
+                console.error("Could not find a match for credentials:", err);
+                res.status(500).json({ error: "Incorrect email and password combination!" });
+            }
+            else {
+                req.session.userId = user._id;
+                res.redirect('/');
+            }
         }
         catch (err) {
             console.error("Error when logging in:", err);
-            res.status(500).json({ error: "Incorrect login or password!" });
+            res.status(500).json({ error: "Error when logging in!" });
         }
     });
 
