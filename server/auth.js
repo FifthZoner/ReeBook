@@ -42,4 +42,23 @@ module.exports = function(app) {
         }
     });
 
+    app.put("/api/register", bodyParser.json(), async (req, res) => {
+        try {
+            const { email, passwordHash, nickname } = req.body;
+            console.log("Register request:\n", email, passwordHash, nickname);
+            const user = new UserEntry({ "credentials.email": email,"credentials.passwordHash":passwordHash, "credentials.nickname":nickname })
+            console.log(user);
+            await user.save();
+
+            req.session.userId = user._id;
+            res.redirect('/');
+        }
+        catch (err) {
+            console.error("Error when registering:", err);
+            res.status(500).json({ error: "Error when registering!" });
+        }
+    });
+
+
+
 }
