@@ -1,6 +1,6 @@
 const session = require("express-session");
 const {UserEntry} = require("./database");
-require("body-parser");
+const bodyParser = require("body-parser");
 module.exports = function(app) {
 
     app.use(session({
@@ -10,7 +10,7 @@ module.exports = function(app) {
         cookie: { secure: false }
     }));
 
-    app.post("/api/login", async(req, res) => {
+    app.post("/api/login", bodyParser.json(), async(req, res) => {
         try {
             console.log("Login request:\n", req.body);
             const { email, passwordHash } = req.body;
@@ -24,7 +24,7 @@ module.exports = function(app) {
         }
     });
 
-    app.get("/api/logout", async(req, res) => {
+    app.get("/api/logout", bodyParser.json(), async(req, res) => {
         try {
             req.session = null;
             res.redirect('/');
