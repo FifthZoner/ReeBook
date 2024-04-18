@@ -1,3 +1,7 @@
+.customShadow{
+  filter: drop-shadow(-5px -5px 15px rgba(0, 0, 0, 0.35)) drop-shadow(5px 5px 15px rgba(0, 0, 0, 0.35));
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

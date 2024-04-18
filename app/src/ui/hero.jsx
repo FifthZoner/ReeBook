@@ -1,6 +1,7 @@
 import React from "react";
 import hero from "../assets/library.jpg";
 
+
 const heroImg = {
   backgroundImage: `url(${hero})`,
   backgroundPosition: "center",
@@ -21,7 +22,7 @@ const Hero = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
           corrupti, adipisci itaque
         </p>
-        <button className=" text-2xl w-min bg-yellow-300 my-6 py-1 px-8 rounded-xl drop-shadow-2xl font-bold">
+        <button className=" text-2xl w-min bg-yellow-300 my-6 py-1 px-8 rounded-xl font-bold customShadow">
           Explore
         </button>
       </div>
@@ -35,7 +36,7 @@ const Hero = () => {
               <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md">
                 Book this book
               </button>
-              <button className="bg-white drop-shadow-lg py-1 px-3 rounded-md">
+              <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md ">
                 Info
               </button>
             </div>

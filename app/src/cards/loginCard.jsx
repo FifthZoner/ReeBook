@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -17,6 +17,17 @@ export default function loginCard(){
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
       };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log({
+          email: data.get('email'),
+          password: data.get('password'),
+        });
+      };
+    
+    
     return(
     <div>
         <form action="">
@@ -55,7 +66,7 @@ export default function loginCard(){
             <a href="#" className="underline select-none">Forgot password?</a>
           </div>
 
-          <Button variant="contained" sx={{borderRadius: 20}} className="w-full">Submit</Button>
+          <Button variant="contained" onClick={handleSubmit} sx={{borderRadius: 20}} className="w-full">Submit</Button>
         </form>
       </div>
     );
