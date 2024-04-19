@@ -24,6 +24,7 @@ function Copyright(props) {
 export default function SignInSide() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -66,7 +67,7 @@ export default function SignInSide() {
           <form onSubmit={handleLogin}>
             <label htmlFor="email">Email:</label>
             <input
-              type="email"
+              type="text"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -80,6 +81,7 @@ export default function SignInSide() {
             />
             <button type="submit">Login</button>
           </form>
+          {error && <p>{error}</p>}
         </div>
       </div>
     </div>
