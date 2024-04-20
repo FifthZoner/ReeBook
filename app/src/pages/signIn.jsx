@@ -64,9 +64,10 @@ export default function SignInSide() {
           <Book3dCard />
         </div>
         <div>
-          <form onSubmit={handleLogin}>
-            <label htmlFor="email">Email:</label>
+          <form onSubmit={handleLogin} className="flex flex-col justify-center items-center">
+            <label htmlFor="email" >Email:</label>
             <input
+              className="text-black"
               type="text"
               id="email"
               value={email}
@@ -74,6 +75,7 @@ export default function SignInSide() {
             />
             <label htmlFor="password">Password:</label>
             <input
+              className="text-black"
               type="password"
               id="password"
               value={password}
