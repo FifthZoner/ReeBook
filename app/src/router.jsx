@@ -7,5 +7,5 @@ export const router = createBrowserRouter([
     {path: "/", element: <Hero/>},
     {path: "/signIn", element: <SignInSide/>},
     {path: "/signUp", element: <SignUpSide/>}
-  ]);
+]);
   
