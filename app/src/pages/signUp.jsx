@@ -12,7 +12,26 @@ export default function SignUpSide() {
 
 
   const handleRegister = async (e) => {
-    
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          passwordHash: password,
+          nickname: login,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      console.log("Logged in")
+    } catch (err) {
+      setError("Wrong pass or login");
+    }
   };
 
   return (
@@ -43,7 +62,7 @@ export default function SignUpSide() {
             <input
               className="text-black"
               type="password"
-              id="password"
+              id="passwordRe"
               value={passwordRe}
               onChange={(e) => setPasswordRe(e.target.value)}
             />

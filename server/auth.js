@@ -51,7 +51,7 @@ module.exports = function(app) {
             await user.save();
 
             req.session.userId = user._id;
-            res.redirect('/');
+            //res.redirect('/'); do naprawy nie dziala i przez to errory sa
         }
         catch (err) {
             console.error("Error when registering:", err);
