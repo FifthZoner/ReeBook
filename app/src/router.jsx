@@ -1,11 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Hero from './ui/hero.jsx';
 import SignInSide from './pages/signIn.jsx';
 import SignUpSide from './pages/signUp.jsx';
+import Main from './pages/welcome.jsx';
+import Navbar from './ui/navbar.jsx';
 
 export const router = createBrowserRouter([
-    {path: "/", element: <Hero/>},
+    {path: "/", element: <Main/>},
     {path: "/signIn", element: <SignInSide/>},
-    {path: "/signUp", element: <SignUpSide/>}
+    {path: "/signUp", element: <SignUpSide/>},
+    {path: "/nav", element: <Navbar/>}
 ]);
   
