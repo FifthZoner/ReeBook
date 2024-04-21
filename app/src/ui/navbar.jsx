@@ -34,11 +34,11 @@ return(
         <nav className="my-0 ml-auto content-center flex">
             <span className="py-4 pl-4 hidden md:block">LOGO</span>
                 <ul className={isActive ?  onStyle[1] : offStyle[1]}>
-                    <li className="p-1 ml-6 text-center"><Link to="/">Home</Link></li>
-                    <li className="p-1 ml-6 text-center"><Link to="#">About</Link></li>
-                    <li className="p-1 ml-6 text-center"><Link to="#">Contact</Link></li>
-                    <li className="p-1 ml-6 text-center"><Link to="/signIn">Login</Link></li>
-                    <li className="p-1 ml-6 text-center"><Link to="/signUp">Register</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="/">Home</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="#">About</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="#">Contact</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="/signIn">Login</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="/signUp">Register</Link></li>
                 </ul>
             <button className="p-4 cursor-pointer bg-transparent border-none md:hidden ml-auto" onClick={toggleClass}>
                 <span className="inline-block relative w-8 h-6">
