@@ -1,7 +1,6 @@
 import React from "react";
 import hero from "../assets/library.jpg";
 
-
 const heroImg = {
   backgroundImage: `url(${hero})`,
   backgroundPosition: "center",
@@ -33,9 +32,6 @@ const Hero = () => {
             <h1 className=" font-bold text-xl">Book name</h1>
             <p className=" text-gray-400">Tags</p>
             <div className=" flex flex-row gap-2 py-2">
-              <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md">
-                Book this book
-              </button>
               <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md ">
                 Info
               </button>
@@ -48,9 +44,6 @@ const Hero = () => {
             <h1 className=" font-bold text-xl">Book name</h1>
             <p className=" text-gray-400">Tags</p>
             <div className=" flex flex-row gap-2 py-2">
-              <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md">
-                Book this book
-              </button>
               <button className="bg-white drop-shadow-lg py-1 px-3 rounded-md">
                 Info
               </button>
@@ -63,16 +56,12 @@ const Hero = () => {
             <h1 className=" font-bold text-xl">Book name</h1>
             <p className=" text-gray-400">Tags</p>
             <div className=" flex flex-row gap-2 py-2">
-              <button className="bg-white drop-shadow-xl py-1 px-3 rounded-md">
-                Book this book
-              </button>
               <button className="bg-white drop-shadow-lg py-1 px-3 rounded-md">
                 Info
               </button>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );

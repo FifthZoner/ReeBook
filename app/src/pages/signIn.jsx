@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import hero from "../assets/library.jpg";
+import hero from "../assets/book.png";
 
 function Copyright(props) {
   return (
@@ -35,7 +35,7 @@ export default function SignInSide() {
         },
         body: JSON.stringify({
           email,
-          passwordHash: password,
+          password,
         }),
       });
       if (!response.ok) {
@@ -57,13 +57,13 @@ export default function SignInSide() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-orange-800 to-orange-700 min-h-screen flex items-center justify-center">
-      <div className="relative w-full max-w-3xl p-8 bg-purple-100 rounded-lg shadow-lg flex flex-row">
-        <div className="w-1/2">
-          <img src={hero} alt="" className="w-full rounded-lg shadow-lg" />
+    <div className="bg-purple-100 sm:bg-gradient-to-tr from-purple-900 to-purple-950 min-h-screen flex items-center justify-center">
+      <div className="relative w-full max-w-3xl bg-purple-100 sm:rounded-lg sm:shadow-lg flex flex-col sm:flex-row items-center">
+        <div className="w-1/2 sm:m-8 ">
+          <img src={hero} alt="" className="w-full rounded-full shadow-lg p-2" />
         </div>
 
-        <div className="w-1/2">
+        <div className="w-1/2 sm:m-8">
           <div className="mt-4 text-center"></div>
           <h2 className="text-2xl font-semibold my-4 text-center">Sign In</h2>
           <form
@@ -88,7 +88,7 @@ export default function SignInSide() {
             />
             <button
               type="submit"
-              className="w-full bg-orange-700 text-white py-2 rounded-md hover:bg-orange-800 my-2 transition duration-300"
+              className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300"
             >
               Login
             </button>
