@@ -20,11 +20,7 @@ async function run() {
 run().catch(console.dir);
 
 const UserCollection = mongoose.model('users', schemas.userSchema);
-const BookInfoCollection = mongoose.model('bookInfo', schemas.bookInfoSchema);
+const BookInfoCollection = mongoose.model('bookInfos', schemas.bookInfoSchema);
 const BookInstanceCollection = mongoose.model('bookInstances', schemas.bookInstanceSchema);
 
 module.exports = {UserCollection, BookInfoCollection, BookInstanceCollection};
-
-
-//const newUser = new UserEntry({"credentials.email" : "test email", "credentials.nickname" : "test nick", "credentials.passwordHash" : "test password"});
-//newUser.save();
