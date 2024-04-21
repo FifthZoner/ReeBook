@@ -34,6 +34,8 @@ module.exports = function(app) {
 
     app.get("/api/logout", bodyParser.json(), async(req, res) => {
         try {
+            req.session.userId = null;
+            req.session.destroy();
             req.session = null;
             res.status(256).json( {"response": "Logged out successfully!"} );
         }
