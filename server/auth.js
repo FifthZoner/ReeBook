@@ -1,5 +1,5 @@
 const session = require("express-session");
-const {UserEntry} = require("./database");
+const {UserCollection} = require("./database");
 const bodyParser = require("body-parser");
 module.exports = function(app) {
 
@@ -12,9 +12,10 @@ module.exports = function(app) {
 
     app.post("/api/login", bodyParser.json(), async(req, res) => {
         try {
-            const { email, passwordHash } = req.body;
-            console.log("Login request:\n", email, passwordHash);
-            const user = await UserEntry.findOne({"credentials.email" : email, "credentials.passwordHash" : passwordHash});
+            const { email, password } = req.body;
+            console.log("Login request:\n", email, password);
+            // TODO: Change to hashed
+            const user = await UserCollection.findOne({"credentials.email" : email, "credentials.passwordHash" : password});
             console.log(user);
             if (user == null) {
                 console.error("Could not find a match for credentials:", err);
@@ -22,7 +23,7 @@ module.exports = function(app) {
             }
             else {
                 req.session.userId = user._id;
-                res.redirect('/');
+                res.status(256).json( {"response": "Logged in successfully!"} );
             }
         }
         catch (err) {
@@ -34,7 +35,7 @@ module.exports = function(app) {
     app.get("/api/logout", bodyParser.json(), async(req, res) => {
         try {
             req.session = null;
-            res.redirect('/');
+            res.status(256).json( {"response": "Logged out successfully!"} );
         }
         catch (err) {
             console.error("Error when logging out:", err);
@@ -44,14 +45,15 @@ module.exports = function(app) {
 
     app.put("/api/register", bodyParser.json(), async (req, res) => {
         try {
-            const { email, passwordHash, nickname } = req.body;
-            console.log("Register request:\n", email, passwordHash, nickname);
-            const user = new UserEntry({ "credentials.email": email,"credentials.passwordHash":passwordHash, "credentials.nickname":nickname })
+            const { email, password, nickname } = req.body;
+            console.log("Register request:\n", email, password, nickname);
+            // TODO: Change to hashed
+            const user = new UserCollection({ "credentials.email": email,"credentials.passwordHash":password, "credentials.nickname":nickname })
             console.log(user);
             await user.save();
 
             req.session.userId = user._id;
-            //res.redirect('/'); do naprawy nie dziala i przez to errory sa
+            res.status(256).json( {"response": "Registered successfully!"} );
         }
         catch (err) {
             console.error("Error when registering:", err);
