@@ -32,7 +32,7 @@ module.exports = function(app) {
             res.status(256).json( {"response": "Added a new book!"} );
         }
         catch (err) {
-            console.error("Error when registering:", err);
+            console.error("Error when adding book:", err);
             res.status(500).json({ error: "Error when adding!" });
         }
     });
@@ -66,8 +66,43 @@ module.exports = function(app) {
             res.status(256).json( {"response": "Added a new book!"} );
         }
         catch (err) {
-            console.error("Error when registering:", err);
+            console.error("Error when adding book:", err);
             res.status(500).json({ error: "Error when adding!" });
+        }
+    });
+
+    app.put("/api/bookInstance/add", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to add a book!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            if (user.other.accessLevel == 0) {
+                console.error("User without permissions tried to add a book!");
+                res.status(500).json({ error: "Not permitted to add a book!" });
+                return;
+            }
+            const { bookID } = req.body;
+            const bookCheck = await BookInstanceCollection.findOne({ "_id": bookID });
+            console.log(bookCheck, bookID);
+            if (bookCheck == null || bookCheck === undefined) {
+                console.error("Book with that id doesn't exist!");
+                res.status(500).json({ error: "Book info for that id does not exist!" });
+                return;
+            }
+            const book = new BookInfoCollection(
+                {
+                    "bookID": bookID
+                })
+            await book.save();
+
+            res.status(256).json({ "response": "Added a new book instance!" });
+        }
+        catch (err) {
+            console.error("Error when adding book instance:", err);
+            res.status(500).json({ error: "Error when adding book instance!" });
         }
     });
 
