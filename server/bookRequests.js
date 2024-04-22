@@ -85,7 +85,7 @@ module.exports = function(app) {
                 return;
             }
             const { bookID } = req.body;
-            const bookCheck = await BookInstanceCollection.findOne({ "_id": bookID });
+            const bookCheck = await BookInfoCollection.findOne({ "_id" : bookID });
             console.log(bookCheck, bookID);
             if (bookCheck == null || bookCheck === undefined) {
                 console.error("Book with that id doesn't exist!");
