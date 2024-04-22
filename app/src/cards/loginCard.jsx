@@ -1,73 +1,91 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import FormControl from '@mui/material/FormControl';
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import React, { useState } from "react";
+import hero from "../assets/book.png";
 
-export default function loginCard(){
-    const [showPassword, setShowPassword] = React.useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-      };
-    
-    
-    return(
+
+export default function loginCard() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+      console.log("Logged in");
+    } catch (err) {
+      setError("Wrong pass or login");
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
+  };
+
+  return (
     <div>
-        <form action="">
-          <h1 className="text-5xl text-center">Login</h1>
-          <div className="w-full my-10 flex items-center">
+      <div className="relative w-full max-w-3xl bg-purple-100 sm:rounded-lg sm:shadow-lg flex flex-col sm:flex-row items-center">
+        <div className="w-1/2 sm:m-8 ">
+          <img
+            src={hero}
+            alt=""
+            className="w-full rounded-full shadow-lg p-2"
+          />
+        </div>
 
-            <TextField id="outlined-basic" label="Username" variant="outlined" className="w-full" sx={{ input: {color: 'white'}}}/>
-          </div>
-          
-          <div className="w-full my-10 flex items-center">
+        <div className="w-1/2 sm:m-8">
+          <div className="mt-4 text-center"></div>
+          <h2 className="text-2xl font-semibold my-4 text-center">Sign In</h2>
+          <form
+            onSubmit={handleLogin}
+            className="flex flex-col justify-center items-center"
+          >
+            <label htmlFor="email">Email:</label>
+            <input
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2"
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <label htmlFor="password">Password:</label>
+            <input
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300"
+            >
+              Login
+            </button>
+          </form>
+          {error && <p className=" text-center">{error}</p>}
 
-            <FormControl variant="outlined" className="w-full">
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                <OutlinedInput
-                    id="outlined-adornment-password"
-                    type={showPassword ? 'text' : 'password'}
-                    endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                        >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>
-                    }
-                    label="Password"
-                />
-            </FormControl>
-          </div>
-
-          <div className="flex justify-around my-6 items-center">
-          <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" className="select-none"/>
-            <a href="#" className="underline select-none">Forgot password?</a>
-          </div>
-
-          <Button variant="contained" onClick={handleSubmit} sx={{borderRadius: 20}} className="w-full">Submit</Button>
-        </form>
+          <p className="mt-4 text-gray-600 text-center">
+            Not a member? Register now
+          </p>
+        </div>
       </div>
-    );
+    </div>
+  );
 }
