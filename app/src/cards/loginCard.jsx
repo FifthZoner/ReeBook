@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import hero from "../assets/book.png";
+import hero from "../assets/book2.png";
 
 
 export default function loginCard() {
@@ -29,15 +29,6 @@ export default function loginCard() {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
   return (
     <div>
       <div className="relative w-full max-w-3xl bg-purple-100 sm:rounded-lg sm:shadow-lg flex flex-col sm:flex-row items-center">
@@ -50,7 +41,6 @@ export default function loginCard() {
         </div>
 
         <div className="w-1/2 sm:m-8">
-          <div className="mt-4 text-center"></div>
           <h2 className="text-2xl font-semibold my-4 text-center">Sign In</h2>
           <form
             onSubmit={handleLogin}
