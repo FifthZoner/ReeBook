@@ -13,12 +13,12 @@ module.exports = function(app) {
 
     app.put("/api/bookInfo/addBare", bodyParser.json(), async (req, res) => {
         try {
-            if (req.session == null) {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
                 console.error("User without session tried to add a book!");
-                res.status(500).json({error: "Invalid session"});
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
                 return;
             }
-            const user = await UserCollection.findOne({_id : req.session.userId});
             if (user.other.accessLevel == 0) {
                 console.error("User without permissions tried to add a book!");
                 res.status(500).json({ error: "Not permitted to add a book!" });
