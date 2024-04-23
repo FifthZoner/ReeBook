@@ -2,7 +2,6 @@ import * as React from "react";
 import LoginCard from "../cards/loginCard";
 import RegisterCard from "../cards/registerCard";
 
-
 export default function SignInSide() {
 
   return (

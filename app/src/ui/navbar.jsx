@@ -37,8 +37,7 @@ return(
                     <li className="p-1 md:ml-6 text-center"><Link to="/">Home</Link></li>
                     <li className="p-1 md:ml-6 text-center"><Link to="#">About</Link></li>
                     <li className="p-1 md:ml-6 text-center"><Link to="#">Contact</Link></li>
-                    <li className="p-1 md:ml-6 text-center"><Link to="/signIn">Login</Link></li>
-                    <li className="p-1 md:ml-6 text-center"><Link to="/signUp">Register</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><Link to="/login">Login</Link></li>
                 </ul>
             <button className="p-4 cursor-pointer bg-transparent border-none md:hidden ml-auto" onClick={toggleClass}>
                 <span className="inline-block relative w-8 h-6">
