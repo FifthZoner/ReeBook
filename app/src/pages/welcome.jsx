@@ -2,7 +2,7 @@ import React from 'react';
 import Hero from '../ui/hero'
 import Navbar from '../ui/navbar';
 
-const Main = () => {
+const Welcome = () => {
     return (
         <div>
             <Navbar />
@@ -11,4 +11,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default Welcome;
