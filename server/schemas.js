@@ -29,9 +29,9 @@ const userSchema = new mongoose.Schema({
     },
     other: {
         accessLevel: {
-            type: Number,
-            // 0 - normal user, 1 - book handler, 2 - admin
-            default: 0
+            type: Boolean,
+            // 0 - normal user, 1 - admin
+            default: false
         }
     }
 });
@@ -54,6 +54,20 @@ const bookInfoSchema = new mongoose.Schema({
         imageLink: {
             type: String,
             default: ""
+        },
+        tags: {
+            0: {
+                type: String,
+                default: ""
+            },
+            1: {
+                type: String,
+                default: ""
+            },
+            2: {
+                type: String,
+                default: ""
+            }
         }
     },
     // to be sent when requesting details
@@ -87,7 +101,15 @@ const bookInstanceSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    ownerID: {
+        type: String,
+        required: [true, "Book must have an owner"]
+    },
     borrowDate: {
+        type: Date,
+        default: 0
+    },
+    dueDate: {
         type: Date,
         default: 0
     },
@@ -98,4 +120,23 @@ const bookInstanceSchema = new mongoose.Schema({
     }
 });
 
-module.exports = {userSchema, bookInfoSchema, bookInstanceSchema};
+const bookRequestSchema = new mongoose.Schema({
+    bookID: {
+        type: String,
+        required: [true, "Book ID must be provided"]
+    },
+    requestDate: {
+        type: Date,
+        required: [true, "Request must be a date"]
+    },
+    state: {
+        type: Boolean,
+        default: false // 0 is new, 1 is accepted
+    },
+    days: {
+        type: Number,
+        required: [true, "Borrow time must be provided"]
+    }
+});
+
+module.exports = {userSchema, bookInfoSchema, bookInstanceSchema, bookRequestSchema};

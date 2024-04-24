@@ -22,5 +22,6 @@ run().catch(console.dir);
 const UserCollection = mongoose.model('users', schemas.userSchema);
 const BookInfoCollection = mongoose.model('bookInfos', schemas.bookInfoSchema);
 const BookInstanceCollection = mongoose.model('bookInstances', schemas.bookInstanceSchema);
+const BookRequestCollection = mongoose.model('bookRequests', schemas.bookRequestSchema);
 
-module.exports = {UserCollection, BookInfoCollection, BookInstanceCollection};
+module.exports = {UserCollection, BookInfoCollection, BookInstanceCollection, BookRequestCollection};
