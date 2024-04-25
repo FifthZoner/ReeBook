@@ -2,7 +2,7 @@
 
 Books are split into book info and book instance.
 
-Also dear frontend devs beware: passwordHash was changed to password in login and register!
+Also, dear frontend devs beware: passwordHash was changed to password in login and register!
 
 ### Authorization calls:
 

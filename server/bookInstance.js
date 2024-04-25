@@ -14,7 +14,7 @@ module.exports = function(app) {
             const { bookID } = req.body;
             const bookCheck = await BookInfoCollection.findOne({ "_id" : bookID });
             console.log(bookCheck, bookID);
-            if (bookCheck == null || bookCheck === undefined) {
+            if (bookCheck === null || bookCheck === undefined) {
                 console.error("Book with that id doesn't exist!");
                 res.status(500).json({ error: "Book info for that id does not exist!" });
                 return;
@@ -52,6 +52,11 @@ module.exports = function(app) {
             if (user.other.accessLevel === false && user._id !== book.ownerID) {
                 console.error("User without permissions tried to delete a book!");
                 res.status(500).json({ error: "Not permitted to delete this book!" });
+                return;
+            }
+            if (book.holderID !== "" && book.holderID !== user._id) {
+                console.error("User does not possess this book instance as of now!");
+                res.status(500).json({ error: "Not permitted to delete a book instance that is held by other user!" });
                 return;
             }
             await book.deleteOne();

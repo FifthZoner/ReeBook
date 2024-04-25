@@ -7,7 +7,7 @@ module.exports = function(app) {
 
     app.get("/api",(req, res) =>{
 
-        res.json({"test": ["api"]});
+        res.json({"ReeBook API test response": ["You have successfully connected to ReeBook API!"]});
 
     })
 
