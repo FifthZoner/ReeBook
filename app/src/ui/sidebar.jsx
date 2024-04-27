@@ -6,7 +6,7 @@ import { BsFillCalendar2PlusFill } from "react-icons/bs";
 import { BsCalendarWeekFill } from "react-icons/bs";
 import { FaHistory } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
-
+import logo from "../assets/logo.png";
 
 export default function Sidebar(){
     const [isActive, setIsActive] = useState(false);
@@ -27,7 +27,7 @@ export default function Sidebar(){
     before:-top-3 before:transition before:ease-in-out before:bg-white
     after:content-[''] after:left-0 after:w-full after:h-1 after:bg-black after:absolute
     after:top-3 after:transition after:transform after:ease-in-out after:bg-white`,
-    `mr-4 py-4 px-0 list-none hidden md:flex text-purple-400 flex-col font-bold`,
+    `mr-4 py-4 px-0 list-none hidden md:flex text-white flex-col font-bold`,
     `md:hidden absolute pt-20 flex flex-col items-center justify-between text-4xl w-full h-3/4`,
     `fixed top-0 left-0 h-full z-50 w-16 md:w-60 font-bold text-xl text-white bg-none bg-purple-900`];
 
@@ -43,22 +43,22 @@ export default function Sidebar(){
 return(
     <div className={isActive ?  onStyle[3] : offStyle[3]}>
         <nav className="my-0 ml-auto flex flex-col">
-            <span className="py-4 pl-4 hidden md:block">LOGO</span>
+            <img src={logo} className="md:w-12 md:h-12 md:m-4"></img>
                 <ul className={isActive ?  onStyle[1] : offStyle[1]}>
-                    <li className="p-1 md:ml-6 "><Link to="#">Books</Link></li>
-                    <li className="p-1 md:ml-6 "><Link to="#"><p>Overview</p></Link></li>
-                    <li className="p-1 md:ml-6 "><Link to="#"><p>Rent</p></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><p>Lend</p></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><p>History</p></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><p>Settings</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#">Books</Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Overview</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Rent</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Lend</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>History</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Settings</p></Link></li>
                 </ul>
                 <ul className={isActive ?  onStyle[2] : offStyle[2]}>
-                    <li className="p-1 md:ml-6 "><Link to="#"><FaBook /></Link></li>
-                    <li className="p-1 md:ml-6 "><Link to="#"><GrOverview /></Link></li>
-                    <li className="p-1 md:ml-6 "><Link to="#"><BsFillCalendar2PlusFill /></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><BsCalendarWeekFill /></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><FaHistory /></Link></li>
-                    <li className="p-1 md:ml-6"><Link to="#"><IoMdSettings /></Link></li>
+                    <li className="p-2 md:ml-6 "><Link to="#"><FaBook /></Link></li>
+                    <li className="p-2 md:ml-6 "><Link to="#"><GrOverview /></Link></li>
+                    <li className="p-2 md:ml-6 "><Link to="#"><BsFillCalendar2PlusFill /></Link></li>
+                    <li className="p-2 md:ml-6"><Link to="#"><BsCalendarWeekFill /></Link></li>
+                    <li className="p-2 md:ml-6"><Link to="#"><FaHistory /></Link></li>
+                    <li className="p-2 md:ml-6"><Link to="#"><IoMdSettings /></Link></li>
                 </ul>
             <button className="p-4 cursor-pointer bg-transparent border-none md:hidden mr-auto" onClick={toggleClass}>
                 <span className="inline-block relative w-8 h-6">

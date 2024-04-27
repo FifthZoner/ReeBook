@@ -21,8 +21,8 @@ const Hero = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
           corrupti, adipisci itaque
         </p>
-        <button className=" text-2xl w-min bg-yellow-300 my-6 py-1 px-8 rounded-xl font-bold customShadow">
-          Explore
+        <button className=" text-2xl w-min bg-purple-900 my-6 py-1 px-8 rounded-lg border border-purple-950 font-semibold customShadow text-white">
+          EXPLORE
         </button>
       </div>
       <div className="hidden lg:flex w-1/3 bg-black bg-opacity-20 rounded-3xl p-12  flex-col flex-1 gap-8 backdrop-blur-[3px] drop-shadow-xl max-h-full justify-center">

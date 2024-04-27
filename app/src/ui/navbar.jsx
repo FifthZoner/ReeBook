@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function Navbar(){
     const [isActive, setIsActive] = useState(false);
@@ -32,7 +33,7 @@ export default function Navbar(){
 return(
     <div className="absolute top-0 left-0 z-50 w-full font-bold text-xl text-white">
         <nav className="my-0 ml-auto content-center flex">
-            <span className="py-4 pl-4 hidden md:block">LOGO</span>
+            <img src={logo} alt="logo" className="w-12 h-12 m-4" />
                 <ul className={isActive ?  onStyle[1] : offStyle[1]}>
                     <li className="p-1 md:ml-6 text-center"><Link to="/">Home</Link></li>
                     <li className="p-1 md:ml-6 text-center"><Link to="#">About</Link></li>
