@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import hero from "../assets/book2.png";
 
 
@@ -23,7 +23,9 @@ export default function loginCard() {
       if (!response.ok) {
         throw new Error("Login failed");
       }
-      console.log("Logged in");
+      console.log("Logged in 1");
+      console.log("Logged in 2");
+
     } catch (err) {
       setError("Wrong pass or login");
     }
