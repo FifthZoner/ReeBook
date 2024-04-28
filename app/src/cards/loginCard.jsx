@@ -1,11 +1,13 @@
 import React, { useState, useContext } from "react";
 import hero from "../assets/book2.png";
+import { SessionContext  } from '../hooks/SessionContext';
 
 
 export default function loginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { saveSession } = useContext(SessionContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,10 +22,12 @@ export default function loginCard() {
           password,
         }),
       });
+      const userSession = await response.json();
       if (!response.ok) {
         throw new Error("Login failed");
       }
       console.log("Logged in 1");
+      saveSession(userSession);
       console.log("Logged in 2");
 
     } catch (err) {
