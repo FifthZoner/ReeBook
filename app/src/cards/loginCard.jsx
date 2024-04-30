@@ -26,10 +26,7 @@ export default function loginCard() {
       if (!response.ok) {
         throw new Error("Login failed");
       }
-      console.log("Logged in 1");
       saveSession(userSession);
-      console.log("Logged in 2");
-
     } catch (err) {
       setError("Wrong pass or login");
     }
