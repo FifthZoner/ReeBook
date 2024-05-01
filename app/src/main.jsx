@@ -6,13 +6,10 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { RouterProvider } from "react-router-dom";
-import { SessionProvider } from "./hooks/SessionContext";
 import { router } from "./router";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <SessionProvider>
       <RouterProvider router={router} />
-    </SessionProvider>
   </React.StrictMode>
 );
