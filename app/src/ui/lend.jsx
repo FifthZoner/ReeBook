@@ -36,6 +36,7 @@ const Lend = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(bookInfo),
+          credentials: 'include',
         }
       );
 
@@ -91,7 +92,7 @@ const Lend = () => {
           />
           <p>Release Date</p>
           <input
-            type="text"
+            type="date"
             name="releaseDate"
             value={bookInfo.releaseDate}
             onChange={handleChange}

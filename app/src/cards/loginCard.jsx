@@ -21,6 +21,7 @@ export default function loginCard() {
           email,
           password,
         }),
+        credentials: 'include'
       });
       const userSession = await response.json();
       if (!response.ok) {

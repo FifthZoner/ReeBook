@@ -3,11 +3,19 @@ const cors = require('cors');
 
 
 const app = express()
-app.use(cors());
-const port = 5000
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}`)
+const serverPort = 5000
+const clientPort = 3000
+
+const corsOptions = {
+  origin: `http://localhost:${clientPort}`,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.listen(serverPort, () => {
+  console.log(`http://localhost:${serverPort}`)
 })
 
 require('./routing.js')(app);
