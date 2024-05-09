@@ -6,7 +6,7 @@ const Main = () => {
   return (
     <div>
         <Sidebar />
-        <div className="md:pl-60 pl-16">
+        <div className="md:pl-60 pl-16 bg-gray-100 h-screen">
           <Lend />
         </div>
     </div>
