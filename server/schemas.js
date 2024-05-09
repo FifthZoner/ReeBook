@@ -121,17 +121,25 @@ const bookInstanceSchema = new mongoose.Schema({
 });
 
 const bookRequestSchema = new mongoose.Schema({
-    bookID: {
+    askerID: {
+        type: Number,
+        required: [true, "Book ID must be provided"]
+    },
+    targetID: {
+        type: Number,
+        required: [true, "Book ID must be provided"]
+    },
+    bookInstanceID: {
         type: String,
         required: [true, "Book ID must be provided"]
     },
     requestDate: {
         type: Date,
-        required: [true, "Request must be a date"]
+        required: [true, "Request have be a date"]
     },
     state: {
-        type: Boolean,
-        default: false // 0 is new, 1 is accepted
+        type: Number,
+        default: 0 // 0 is new, 1 is accepted, 2 is transfered
     },
     days: {
         type: Number,
