@@ -36,7 +36,7 @@ const Lend = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(bookInfo),
-          credentials: 'include',
+          credentials: "include",
         }
       );
 
@@ -53,10 +53,11 @@ const Lend = () => {
 
   return (
     <div>
-      <div>
-        <form onSubmit={handleSubmit}>
+      <div className=" bg-white m-4 py-6 px-8 rounded-xl inline-block text-lg text-center font-semibold drop-shadow-xl">
+        <form onSubmit={handleSubmit} className="m-1 [&>*]:p-1">
           <p>Name</p>
           <input
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
             type="text"
             name="name"
             value={bookInfo.name}
@@ -64,6 +65,7 @@ const Lend = () => {
           />
           <p>Author</p>
           <input
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
             type="text"
             name="author"
             value={bookInfo.author}
@@ -71,6 +73,7 @@ const Lend = () => {
           />
           <p>ISBN</p>
           <input
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
             type="text"
             name="isbn"
             value={bookInfo.isbn}
@@ -78,6 +81,7 @@ const Lend = () => {
           />
           <p>Image Link</p>
           <input
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
             type="text"
             name="imageLink"
             value={bookInfo.imageLink}
@@ -85,54 +89,14 @@ const Lend = () => {
           />
           <p>Description</p>
           <input
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-purple-500 my-2 "
             type="text"
             name="description"
             value={bookInfo.description}
             onChange={handleChange}
           />
-          <p>Release Date</p>
-          <input
-            type="date"
-            name="releaseDate"
-            value={bookInfo.releaseDate}
-            onChange={handleChange}
-          />
-          <p>Release Place</p>
-          <input
-            type="text"
-            name="releasePlace"
-            value={bookInfo.releasePlace}
-            onChange={handleChange}
-          />
-          <p>Distributor</p>
-          <input
-            type="text"
-            name="distributor"
-            value={bookInfo.distributor}
-            onChange={handleChange}
-          />
-          <p>Tag0</p>
-          <input
-            type="text"
-            name="tag0"
-            value={bookInfo.tag0}
-            onChange={handleChange}
-          />
-          <p>Tag1</p>
-          <input
-            type="text"
-            name="tag1"
-            value={bookInfo.tag1}
-            onChange={handleChange}
-          />
-          <p>Tag2</p>
-          <input
-            type="text"
-            name="tag2"
-            value={bookInfo.tag2}
-            onChange={handleChange}
-          />
-          <button type="submit">Lend a Book</button>
+          <hr />
+          <button type="submit" className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300">Lend a Book</button>
         </form>
       </div>
     </div>
