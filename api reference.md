@@ -125,6 +125,15 @@ User must be an admin and there must be no instances of that book.
 
 ### Book instance calls:
 
+#### GET /api/bookInstance/getAll
+
+- mush have a session
+
+## ↓
+
+- response with amount of books, amount of instances, amount lent in total and list of unique books with their stats
+
+
 #### PUT /api/bookInstance/add
 
 - bookID: \<ID of the book info\>

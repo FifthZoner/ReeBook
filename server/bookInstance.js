@@ -68,4 +68,50 @@ module.exports = function(app) {
             res.status(500).json({ error: "Error when deleting book instance!" });
         }
     });
+
+    app.get("/api/bookInstance/getAll", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried get their instances!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+
+            const instances = await BookInstanceCollection.find({ "ownerID" : req.session.userId });
+            if (instances.length === 0) {
+                console.log("User with no books");
+                res.status(200).json({ "booksAmount" : 0, "instancesAmount": 0, "lentAmount": 0 });
+                return;
+            }
+            const instancesAmount = instances.length;
+            let lentAmount = 0;
+            let uniqueBooks = [];
+            for (let n = 0; n < instancesAmount; n++) {
+                let addLent = 0;
+                if (instances[n].ownerID !== instances[n].holderID && instances[n].holderID !== "") {
+                    lentAmount++;
+                    addLent = 1;
+                }
+                let addBook = true;
+                for (m in uniqueBooks) {
+                    if (m[0] == instances[n].bookID) {
+                        m[1]++;
+                        m[2] += addLent;
+                        addBook = false;
+                        break;
+                    }
+                }
+                if (addBook) {
+                    uniqueBooks.push({"bookID" : instances[n].bookID, "totalAmount" : 1, "lentAmount" : addLent})
+                }
+            }
+
+            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, "lentAmount": lentAmount, uniqueBooks });
+        }
+        catch (err) {
+            console.error("Error when returning user instances:", err);
+            res.status(500).json({ error: "Error when returning user instances!" });
+        }
+    });
 }
