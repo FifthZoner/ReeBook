@@ -96,7 +96,7 @@ const Lend = () => {
             onChange={handleChange}
           />
           <hr />
-          <button type="submit" className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300">Lend a Book</button>
+          <button type="submit" className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300">Add a Book</button>
         </form>
       </div>
     </div>
