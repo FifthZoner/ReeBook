@@ -18,9 +18,20 @@ module.exports = function(app) {
                 res.status(500).json({ error: "Book info for that id does not exist!" });
                 return;
             }
+            if (bookCheck.ownerID === req.session.userId) {
+                console.error("Owner tried to request their own book!");
+                res.status(500).json({ error: "Cannot request your own book!" });
+                return;
+            }
             if (bookCheck.holderID !== bookCheck.ownerID && bookCheck.holderID !== "") {
-                console.error("Book has no owner!");
-                res.status(500).json({ error: "Book info for that id does not exist!" });
+                console.error("Tried to get a book that isn't held by the owner");
+                res.status(500).json({ error: "Owner does not currently hold that book!" });
+                return;
+            }
+            const requestCheck = await BookRequestCollection.findOne({ "instanceID": instanceID, "askerID" : req.session.userId });
+            if (requestCheck !== null) {
+                console.error("User attempted to duplicate request!");
+                res.status(500).json({ error: "Cannot submit the same request twice!" });
                 return;
             }
             const { days } = req.body;
@@ -29,18 +40,18 @@ module.exports = function(app) {
                 res.status(500).json({ error: "Days has the wrong value!" });
                 return;
             }
-            const book = new BookRequestCollection(
+            const request = new BookRequestCollection(
                 {
                     "instanceID": instanceID, "askerID": req.session.userId, "targetID": bookCheck.ownerID,
                     "requestDate": new Date(), "days": days
                 })
-            await book.save();
+            await request.save();
 
             res.status(256).json({ "response": "Added a new request!" });
         }
         catch (err) {
-            console.error("Error when returning book info list:", err);
-            res.status(500).json({ error: "Error when returning book info list!" });
+            console.error("Error adding request:", err);
+            res.status(500).json({ error: "Error when adding request!" });
         }
     });
 

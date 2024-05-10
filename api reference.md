@@ -34,6 +34,13 @@ Also, dear frontend devs beware: passwordHash was changed to password in login a
 - ends session
 - response
 
+#### GET /api/checkSession
+
+## ↓
+
+- 200 if valid
+- 401 if invalid
+
 ### Book info calls:
 
 #### PUT /api/bookInfo/addBare
@@ -134,6 +141,16 @@ User must be an admin and there must be no instances of that book.
 
 - response and book instance is deleted or not if id/session is invalid/someone else has it
 
+### Book request calls:
+
+#### PUT /api/bookRequest/add
+
+- String instanceID: \<ID of the book info\>
+- Number days: \<amount of days to lend a book for\>
+
+## ↓
+
+- response and book request is added or not if there were issues
 
 ### Test calls:
 

@@ -63,6 +63,24 @@ module.exports = function(app) {
         }
     });
 
+    app.get("/api/checkSession", bodyParser.json(), async(req, res) => {
+        try {
+            if (req.session == null || req.session.user == null || req.session.authenticated === false) {
+                res.status(401).json({ response: "User session is not valid!" });
+                return;
+            }
+            const user = await UserCollection.findOne({_id : req.session.userId});
+            if (user === undefined || user == null) {
+                res.status(401).json({ response: "User session is not valid!" });
+                return;
+            }
+            res.status(200).json( { response: "Session is valid!"} );
+        }
+        catch (err) {
+            console.error("Error when checking session:", err);
+            res.status(500).json({ error: "Error when checking session!" });
+        }
+    })
 
 
 }
