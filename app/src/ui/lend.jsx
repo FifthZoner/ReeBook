@@ -53,7 +53,7 @@ const Lend = () => {
 
   return (
     <div>
-      <div className=" bg-white mx-4 my-2 py-6 px-8 rounded-xl inline-block text-lg text-center font-semibold drop-shadow-xl">
+      <div className=" bg-white mx-4 my-2 py-6 px-8 rounded-xl inline-block text-lg text-center font-semibold drop-shadow-xl min-w-80">
         <form onSubmit={handleSubmit} className="m-1 [&>*]:p-1">
           <p>Name</p>
           <input
