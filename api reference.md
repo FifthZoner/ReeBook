@@ -161,6 +161,42 @@ User must be an admin and there must be no instances of that book.
 
 - response and book request is added or not if there were issues
 
+#### POST /api/bookRequest/accept
+
+- String requestID: \<id of the request\>
+- must be the owner of requested book
+
+## ↓
+
+- response and book request accepted
+
+#### POST /api/bookRequest/decline
+
+- String requestID: \<id of the request\>
+- must be the owner of requested book
+
+## ↓
+
+- response and book request dropped
+
+#### POST /api/bookRequest/confirmReceived
+
+- String requestID: \<id of the request\>
+- must be the creator of request, to be used when requester gets the book
+
+## ↓
+
+- response and book request proceeds
+
+#### POST /api/bookRequest/confirmGiven
+
+- String requestID: \<id of the request\>
+- must be the owner of the book, confirming that you gave the book to the other person
+
+## ↓
+
+- response and book request ends, instance changes owner
+
 ### Test calls:
 
 #### GET /api

@@ -174,7 +174,7 @@ module.exports = function(app) {
                 res.status(500).json({ error: "That request does not exist!" });
                 return;
             }
-            if (request.state !== 1) {
+            if (request.state !== 2) {
                 console.error("User tried to confirm non confirmable request!");
                 res.status(500).json({ error: "That request has the wrong state to confirm!" });
                 return;
