@@ -160,6 +160,56 @@ module.exports = function(app) {
         }
     });
 
+    // gives back a list of book basic infos, limited by page and filters
+    app.post("/api/bookInfo/getBasicsFiltered", bodyParser.json(), async (req, res) => {
+        try {
+            let { page, pageSize, publishedAfter } = req.body;   
+            
+            //DEBUG: date filter not working properly
+            let dateFilter = {};
+            if (publishedAfter) {
+                dateFilter = {releaseDate: { $gte: new Date(publishedAfter) } };
+            }
+            
+            let filters = dateFilter;    //TODO: add more filters later
+
+            if (pageSize <= 0) {
+                res.status(500).json({ error: "Page needs to have at least 1 space!" });
+                return;
+            }
+            page = (parseInt(page) > 0 ? parseInt(page) : 1);     //default page: 1
+            pageSize = parseInt(pageSize);
+
+            const booksAmount = await BookInfoCollection.countDocuments(filters);
+            const pagesAmount = Math.ceil(booksAmount / pageSize);
+            
+            if (page > pagesAmount) {
+                res.status(500).json({ error: `Page ${page} not available` });
+                return;
+            }
+            const skip = (page - 1) * pageSize;
+            const limit = pageSize;
+
+            const books = await BookInfoCollection.find(filters).skip(skip).limit(limit);
+
+            let infos = [];
+            for (let n = 0; n < books.length; n++) {
+                infos.push([books[n].identification, {"_id" : books[n]._id}]);
+            }
+
+            res.json({
+                pagesAmount,
+                page,
+                books: infos
+            });
+
+        }
+        catch (err) {
+            console.error("Error when returning book info list:", err);
+            res.status(500).json({ error: "Error when returning book info list!" });
+        }
+    });
+
     app.post("/api/bookInfo/getDetailed", bodyParser.json(), async (req, res) => {
         try {
             const {_id} = req.body;
