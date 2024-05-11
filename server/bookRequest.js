@@ -55,6 +55,73 @@ module.exports = function(app) {
         }
     });
 
+    app.post("/api/bookRequest/accept", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried accept request!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { requestID } = req.body;
+            const request = await BookRequestCollection.findOne({ "_id": requestID });
+            if (request === undefined || request == null) {
+                console.error("User tried to accept non existent request!");
+                res.status(500).json({ error: "That request does not exist!" });
+                return;
+            }
+            if (request.state !== 0) {
+                console.error("User tried to accept non acceptable request!");
+                res.status(500).json({ error: "That request has the wrong state to accept!" });
+                return;
+            }
+            if (request.targetID !== req.session.userId) {
+                console.error("User is not the target of this request!");
+                res.status(500).json({ error: "Not the target of the request!" });
+                return;
+            }
+            request.state = 1;
+            await request.updateOne(request)
+            res.status(256).json({ "response": "Accepted request!" });
+        }
+        catch (err) {
+            console.error("Error adding request:", err);
+            res.status(500).json({ error: "Error when adding request!" });
+        }
+    });
 
+    app.post("/api/bookRequest/decline", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to decline request!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { requestID } = req.body;
+            const request = await BookRequestCollection.findOne({ "_id": requestID });
+            if (request === undefined || request == null) {
+                console.error("User tried to decline non existent request!");
+                res.status(500).json({ error: "That request does not exist!" });
+                return;
+            }
+            if (request.state !== 0) {
+                console.error("User tried to decline non declinable request!");
+                res.status(500).json({ error: "That request has the wrong state to decline!" });
+                return;
+            }
+            if (request.targetID !== req.session.userId) {
+                console.error("User is not the target of this request!");
+                res.status(500).json({ error: "Not the target of the request!" });
+                return;
+            }
+            await request.deleteOne(request)
+            res.status(256).json({ "response": "Declined request!" });
+        }
+        catch (err) {
+            console.error("Error adding request:", err);
+            res.status(500).json({ error: "Error when adding request!" });
+        }
+    });
 
 }

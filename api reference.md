@@ -131,7 +131,7 @@ User must be an admin and there must be no instances of that book.
 
 ## ↓
 
-- response with amount of books, amount of instances, amount lent in total and list of unique books with their stats
+- response with amount of books, amount of instances, amount lent in total and list of unique books with their basic info
 
 
 #### PUT /api/bookInstance/add

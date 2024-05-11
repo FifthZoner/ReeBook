@@ -103,7 +103,13 @@ module.exports = function(app) {
                     }
                 }
                 if (addBook) {
-                    uniqueBooks.push({"bookID" : instances[n].bookID, "totalAmount" : 1, "lentAmount" : addLent})
+                    bookInfo = await BookInfoCollection.findOne({"_id" : instances[n].bookID})
+                    if (bookInfo === undefined || bookInfo == null) {
+                        console.error("Cannet get book info!");
+                        res.status(500).json({ error: "An internal problem with getting book info appeared!" });
+                        return;
+                    }
+                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "lentAmount" : addLent})
                 }
             }
 
