@@ -127,7 +127,7 @@ User must be an admin and there must be no instances of that book.
 
 #### GET /api/bookInstance/getAll
 
-- mush have a session
+- must have a session
 
 ## ↓
 

@@ -119,8 +119,85 @@ module.exports = function(app) {
             res.status(256).json({ "response": "Declined request!" });
         }
         catch (err) {
-            console.error("Error adding request:", err);
-            res.status(500).json({ error: "Error when adding request!" });
+            console.error("Error declining request:", err);
+            res.status(500).json({ error: "Error when declining request!" });
+        }
+    });
+
+    app.post("/api/bookRequest/confirmReceived", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to decline request!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { requestID } = req.body;
+            const request = await BookRequestCollection.findOne({ "_id": requestID });
+            if (request === undefined || request == null) {
+                console.error("User tried to confirm non existent request!");
+                res.status(500).json({ error: "That request does not exist!" });
+                return;
+            }
+            if (request.state !== 1) {
+                console.error("User tried to confirm non confirmable request!");
+                res.status(500).json({ error: "That request has the wrong state to confirm!" });
+                return;
+            }
+            if (request.askerID !== req.session.userId) {
+                console.error("User is not the author of this request!");
+                res.status(500).json({ error: "Not the author of the request!" });
+                return;
+            }
+            request.state = 2;
+            await request.updateOne(request)
+            res.status(256).json({ "response": "Confirmed receive request!" });
+        }
+        catch (err) {
+            console.error("Error confirming request:", err);
+            res.status(500).json({ error: "Error when confirming receive request!" });
+        }
+    });
+
+    app.post("/api/bookRequest/confirmGiven", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to decline request!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { requestID } = req.body;
+            const request = await BookRequestCollection.findOne({ "_id": requestID });
+            if (request === undefined || request == null) {
+                console.error("User tried to confirm non existent request!");
+                res.status(500).json({ error: "That request does not exist!" });
+                return;
+            }
+            if (request.state !== 1) {
+                console.error("User tried to confirm non confirmable request!");
+                res.status(500).json({ error: "That request has the wrong state to confirm!" });
+                return;
+            }
+            if (request.askerID !== req.session.userId) {
+                console.error("User is not the author of this request!");
+                res.status(500).json({ error: "Not the author of the request!" });
+                return;
+            }
+
+            const instance = await BookInstanceCollection.findOne({"_id" : request.instanceID});
+            instance.holderID = request.askerID;
+            instance.borrowDate = new Date();
+            date = new Date();
+            date.setDate(date.getDate() + request.days);
+            instance.dueDate = date;
+            await instance.updateOne(instance);
+            await request.deleteOne(request)
+            res.status(256).json({ "response": "Confirmed book transfer!" });
+        }
+        catch (err) {
+            console.error("Error when confirming request:", err);
+            res.status(500).json({ error: "Error when confirming given request!" });
         }
     });
 
