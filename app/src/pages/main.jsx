@@ -31,6 +31,7 @@ const Main = () => {
             key = {book.bookID}
             title = {book.bookInfo.name}
             author = {book.bookInfo.author}
+            img = {book.bookInfo.imageLink}
             available = {book.lentAmount === 0 ? true : false}
         />
     );
@@ -40,9 +41,9 @@ const Main = () => {
         <Sidebar />
         <div className="">
           <LendState />
-          <div className="flex flex-row">
+          <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center sm:justify-normal">
             <Lend />
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-evenly">
               {booksList}
             </div>
           </div>
