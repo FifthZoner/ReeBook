@@ -24,6 +24,9 @@ export default function LoginCard({ toggleLogin }) {
       if (!response.ok) {
         throw new Error("Login failed");
       }
+      else{
+        window.location.href = "/main";
+      }
     } catch (err) {
       setError("Wrong pass or login");
     }
