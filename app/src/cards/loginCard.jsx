@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import hero from "../assets/book2.png";
 
 
-export default function loginCard() {
+export default function LoginCard({ toggleLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -71,8 +71,8 @@ export default function loginCard() {
           </form>
           {error && <p className=" text-center">{error}</p>}
 
-          <p className="mt-4 text-gray-600 text-center">
-            Not a member? Register now
+          <p className="mt-4 text-gray-600 text-center" onClick={toggleLogin}>
+            Not a member? <span className="text-purple-900 underline cursor-pointer" >Register now</span>
           </p>
         </div>
       </div>

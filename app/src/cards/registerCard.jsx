@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import book from "../assets/book.png";
 
-export default function registerCard() {
+export default function registerCard({toggleLogin}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState("");
@@ -85,7 +85,7 @@ export default function registerCard() {
           </div>
 
           <p className="mt-4 text-gray-600 text-center">
-            Already have an account? Login
+            Already have an account? <span className="text-purple-900 underline cursor-pointer" onClick={toggleLogin}>Login</span>
           </p>
         </div>
         <div className="w-1/2 sm:m-8 ">
