@@ -163,15 +163,43 @@ module.exports = function(app) {
     // gives back a list of book basic infos, limited by page and filters
     app.post("/api/bookInfo/getBasicsFiltered", bodyParser.json(), async (req, res) => {
         try {
-            let { page, pageSize, publishedAfter } = req.body;   
+            let { page, pageSize,   //page details
+                available, publishedAfter, author, title,   //filtering criteria
+                sortBy, sortOrder    //sorting criteria and order
+            } = req.body;   
             
-            //DEBUG: date filter not working properly
-            let dateFilter = {};
-            if (publishedAfter) {
-                dateFilter = {releaseDate: { $gte: new Date(publishedAfter) } };
+            if (isNaN(page) || isNaN(pageSize)){
+                res.status(500).json({ error: "Page number and size must be number value!" });
             }
+
+            //Filters handling
+            let availableFilter = {};
+            let dateFilter = {};
+            let authorFilter = {};
+            let titleFilter = {};
+            if (available) {
+                availableFilter = {};
+            }
+            if (publishedAfter) {
+                dateFilter = {"details.releaseDate": { $gte: new Date(publishedAfter) } };
+            }
+            if (author) {
+                authorFilter = { "identification.author": { $regex: new RegExp(`.*${author}.*`, "i") } };  
+            }
+            if (title) {
+                titleFilter = { "identification.name": { $regex: new RegExp(`.*${title}.*`, "i") } };  
+            }
+            //TODO: add more filters later
+            let filters = {...availableFilter, ...dateFilter, ...authorFilter, ...titleFilter};    
             
-            let filters = dateFilter;    //TODO: add more filters later
+            //sorting handling
+            let sorting = {};
+            if (sortBy){
+                sortOrder = (!parseInt(sortOrder) || (sortOrder != 1 && sortOrder != -1) ? 1 : parseInt(sortOrder));    //default order: ASC
+                sorting[sortBy] = sortOrder; 
+            } else {
+                sorting = { _id: 1} 
+            }
 
             if (pageSize <= 0) {
                 res.status(500).json({ error: "Page needs to have at least 1 space!" });
@@ -190,7 +218,10 @@ module.exports = function(app) {
             const skip = (page - 1) * pageSize;
             const limit = pageSize;
 
-            const books = await BookInfoCollection.find(filters).skip(skip).limit(limit);
+            const books = await BookInfoCollection.find(filters)
+            .sort(sorting)
+            .skip(skip)
+            .limit(limit);
 
             let infos = [];
             for (let n = 0; n < books.length; n++) {
@@ -200,6 +231,7 @@ module.exports = function(app) {
             res.json({
                 pagesAmount,
                 page,
+                booksAmount,
                 books: infos
             });
 

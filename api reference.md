@@ -82,6 +82,27 @@ Any user can add a book, tag0 will have the most weight in the algorithm.
 
 - error response or list of books with basic information: name, author, image link, isbn, _id, tags
 
+#### POST /api/bookInfo/getBasicsFiltered
+
+- page - \<page number\>
+- pageSize - \<maximum page size\>
+- available - \<boolean for availability check\>
+- publishedAfter - \<date after book publication\>
+- author - \<author of a book\>
+- title - \<title of a book\>
+- sortBy - \<sorting criteria\>
+- sortOrder - \<sorting order\>
+
+## ↓
+
+- error response or list of books with basic information (name, author, image link, isbn, _id, tags), pages amount, current page number and amount of books
+- Response list is filtered based on page number, page size, [publication date], [author], [title] 
+- Response list can be filtered using [sortBy], [sortOrder]
+
+sort orders: 1 - ASC, -1 DESC, default: ASC
+
+Availability check will be added later. If no date is provided in database, then book is not returned (to discuss). Defaultly sorted by book id.
+
 #### POST /api/bookInfo/getDetailed
 
 - _id - \<book _id from getBasics\>
