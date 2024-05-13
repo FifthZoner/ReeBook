@@ -1,11 +1,25 @@
 import React, { useState, useContext } from "react";
 import hero from "../assets/book2.png";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function LoginCard({ toggleLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const notify = () => toast.error("Sign in failed!",
+    {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    }
+  );
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +36,7 @@ export default function LoginCard({ toggleLogin }) {
         credentials: 'include'
       });
       if (!response.ok) {
+        notify();
         throw new Error("Login failed");
       }
       else{
@@ -35,6 +50,7 @@ export default function LoginCard({ toggleLogin }) {
   return (
     <div>
       <div className="relative w-full max-w-3xl bg-purple-100 sm:rounded-lg sm:shadow-lg flex flex-col sm:flex-row items-center">
+      <ToastContainer />
         <div className="w-1/2 sm:m-8 ">
           <img
             src={hero}

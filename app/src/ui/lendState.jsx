@@ -3,9 +3,9 @@ import { useState } from "react";
 
 const LendState = () => {
   const [booksCount, setBooksCount] = useState({
-    lent: 7,
-    waiting: 12,
-    all: 19,
+    lent: 1,
+    waiting: 3,
+    all: 4,
   });
 
   //To do: update lent/waiting based on api calls
