@@ -13,17 +13,27 @@ const Main = () => {
     getBooks();
   }, []);
 
-  function getBooks() {
-    axios
-    .get("http://localhost:5000/api/bookInstance/getAll", { withCredentials: true })
-    .then(response => {
-      setBooks(response.data.uniqueBooks);
-      console.log(response.data.uniqueBooks);
-    })
-    .catch(error => {
-      console.log("error", error);
-    });
-  }
+  const getBooks = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/bookInstance/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error in fetching book instances");
+      }
+  
+      const result = await response.json();
+      setBooks(result.uniqueBooks);
+      console.log(result.uniqueBooks);
+    } catch (error) {
+      console.error("Error when handling the GET request:", error);
+    }
+  };
 
   const booksList = books.map((book) => {
     return(
