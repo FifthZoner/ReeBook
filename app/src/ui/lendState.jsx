@@ -2,16 +2,41 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 const LendState = () => {
+
   const [booksCount, setBooksCount] = useState({
-    lent: 1,
-    waiting: 3,
-    all: 4,
+    lent: 0,
+    waiting: 0,
+    all: 0,
   });
 
-  //To do: update lent/waiting based on api calls
-  // useEffect(() => {
-  //   setBooksCount({ lent: 2, waiting: 3, all: 5 });
-  // }, []);
+  const getBooks = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/bookInstance/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
+      if (!response.ok) {
+        throw new Error("Error in fetching book instances");
+      }
+  
+      const result = await response.json();
+      setBooksCount({
+        lent: result.lentAmount,
+        waiting: result.instancesAmount,
+        all: result.lentAmount+result.instancesAmount,
+      });
+    } catch (error) {
+      console.error("Error when handling the GET request:", error);
+    }
+  };
+
+  useEffect(() => {
+     getBooks()
+   }, []);
 
   const lentWidth = (booksCount.lent / booksCount.all) * 100;
   const waitingWidth = (booksCount.waiting / booksCount.all) * 100;
@@ -20,7 +45,7 @@ const LendState = () => {
     <div className="">
       <div className="bg-white mx-4 my-2 py-6  rounded-xl text-lg text-center drop-shadow-xl text-white font-semibold">
         <h1 className=" text-black">Your books status</h1>
-        <div className="flex flex-row px-10">
+        <div className={`flex flex-row px-10 ${booksCount.all!==0 ? 'flex' : 'hidden'}`}>
           <div
             className={` bg-gradient-to-r from-red-600 to-red-500 h-10 border-r drop-shadow-xl flex justify-center items-center ${booksCount.waiting===0 ? 'rounded-full' : 'rounded-l-full'}`} 
             style={{ width: `${lentWidth}%` }}

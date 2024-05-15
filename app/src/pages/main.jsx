@@ -3,7 +3,6 @@ import Sidebar from "../ui/sidebar";
 import Lend from "../ui/lend";
 import LendState from "../ui/lendState";
 import BookCard from "../cards/bookCard";
-import axios from "axios";
 
 
 const Main = () => {
