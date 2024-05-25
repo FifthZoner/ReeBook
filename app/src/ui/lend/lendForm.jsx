@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-const Lend = () => {
+const LendForm = () => {
   const [bookInfo, setBookInfo] = useState({
     name: "",
     author: "",
@@ -103,4 +103,4 @@ const Lend = () => {
   );
 };
 
-export default Lend;
+export default LendForm;
