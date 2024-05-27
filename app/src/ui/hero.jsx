@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import hero from "../assets/library.jpg";
 
 const heroImg = {
@@ -21,9 +22,10 @@ const Hero = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
           corrupti, adipisci itaque
         </p>
+        <Link to="/login">
         <button className=" text-2xl w-min bg-purple-900 my-6 py-1 px-8 rounded-lg border border-purple-950 font-semibold customShadow text-white">
           EXPLORE
-        </button>
+        </button></Link>
       </div>
     </div>
   );

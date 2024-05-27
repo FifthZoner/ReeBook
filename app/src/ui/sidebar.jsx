@@ -11,6 +11,28 @@ import logo from "../assets/logo.png";
 export default function Sidebar(){
     const [isActive, setIsActive] = useState(false);
 
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch("http://localhost:5000/api/logout", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: 'include'
+          });
+          if (!response.ok) {
+            notify();
+            throw new Error("Logout is not possible right now");
+          }
+          else{
+            window.location.href = "/";
+          }
+        } catch (err) {
+          setError("Error");
+        }
+      };
+    
     function toggleClass(){
         if (isActive)
             setIsActive(false);
@@ -51,6 +73,7 @@ return(
                     <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Lend</p></Link></li>
                     <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>History</p></Link></li>
                     <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150"><Link to="#"><p>Settings</p></Link></li>
+                    <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150" onClick={handleLogout}><Link to="#"><p>Logout</p></Link></li>
                 </ul>
                 <ul className={isActive ?  onStyle[2] : offStyle[2]}>
                     <li className="p-2 md:ml-6 "><Link to="#"><FaBook /></Link></li>
