@@ -8,6 +8,7 @@ const lendBooks = () => {
     getBooks();
   }, []);
 
+  //use API for borrowed books
   const getBooks = async () => {
     try {
       const response = await fetch(
@@ -27,7 +28,6 @@ const lendBooks = () => {
 
       const result = await response.json();
       setBooks(result.uniqueBooks);
-      console.log(result.uniqueBooks);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
     }
@@ -40,8 +40,7 @@ const lendBooks = () => {
         title={book.bookInfo.name}
         author={book.bookInfo.author}
         img={book.bookInfo.imageLink}
-        available={book.lentAmount === 0 ? true : false}
-        borrow={false}
+        borrow={true}
       />
     );
   });
