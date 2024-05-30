@@ -8,17 +8,17 @@ export default function BookCard(props) {
             <h1 className="text-sm font-bold overflow-hidden whitespace-nowrap">{props.title ? props.title : "Title"}</h1>
             <p className="text-sm overflow-hidden whitespace-nowrap"><span className="font-semibold">{props.author ? props.author : "Author"}</span></p>
             <div className="flex flex-col justify-center items-center">
-                <div className={props.borrow ? "" : "hidden"}>
+                {!props.borrow && <div>
                     <div className={props.available ? "bg-lime-600 rounded-full w-24" : "bg-lime-600 rounded-full w-24 hidden"}>
                         <p className="text-xs text-white font-semibold px-1">Available</p>
                     </div>
                     <div className={props.available ? "bg-amber-700 rounded-full w-24 hidden" : "bg-amber-700 rounded-full w-24" }>
                         <p className="text-xs text-white font-semibold px-2">Unavailable</p>
                     </div>
-                </div>
-                <button className={props.borrow ? " text-sm w-32 py-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" : "hidden"}>
+                </div>}
+                {props.borrow && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white">
                     RETURN
-                </button>
+                </button>}
             </div>
         </div>
     </div>
