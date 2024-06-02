@@ -32,6 +32,14 @@ const userSchema = new mongoose.Schema({
             type: Boolean,
             // 0 - normal user, 1 - admin
             default: false
+        },
+        borrowed: {
+            type: Number,
+            default: 0
+        },
+        lent: {
+            type: Number,
+            default: 0
         }
     }
 });

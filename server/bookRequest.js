@@ -185,6 +185,14 @@ module.exports = function(app) {
                 return;
             }
 
+            const other = await UserCollection.findOne({ _id: request.askerID });
+            if (other == null) {
+                console.error("Could not get info of asker!");
+                res.status(500).json({ error: "Internal error!" });
+                return;
+            }
+            other.borrowed += 1;
+
             const instance = await BookInstanceCollection.findOne({"_id" : request.instanceID});
             instance.holderID = request.askerID;
             instance.borrowDate = new Date();
@@ -192,8 +200,12 @@ module.exports = function(app) {
             date.setDate(date.getDate() + request.days);
             instance.dueDate = date;
             await instance.updateOne(instance);
-            await request.deleteOne(request)
-            res.status(256).json({ "response": "Confirmed book transfer!" });
+
+            user.other.lent += 1;
+            user.updateOne(user);
+            other.updateOne(other);
+            await request.deleteOne(request);
+            res.status(201).json({ "response": "Confirmed book transfer!" });
         }
         catch (err) {
             console.error("Error when confirming request:", err);

@@ -78,5 +78,20 @@ module.exports = function(app) {
         }
     })
 
+    app.get("/api/user/details", bodyParser.json(), async(req, res) => {
+        try {
+            const user = await UserCollection.findOne({_id : req.session.userId});
+            if (user === undefined || user == null) {
+                res.status(401).json({ response: "User session is not valid!" });
+                return;
+            }
+
+            res.status(200).json( {"personal" : user.personal, "email" : user.credentials.email, "nickname" : user.credentials.nickname, "other" : user.other} );
+        }
+        catch (err) {
+            console.error("Error when returning details", err);
+            res.status(500).json({ error: "Error when returning details!" });
+        }
+    })
 
 }

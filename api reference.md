@@ -41,6 +41,14 @@ Also, dear frontend devs beware: passwordHash was changed to password in login a
 - 200 if valid
 - 401 if invalid
 
+#### GET /api/user/details
+
+- must have a session
+
+## ↓
+
+- returns user details
+
 ### Book info calls:
 
 #### PUT /api/bookInfo/addBare
@@ -154,6 +162,14 @@ User must be an admin and there must be no instances of that book.
 
 - response with amount of books, amount of instances, amount lent in total and list of unique books with their basic info
 
+#### GET /api/bookInstance/getBorrowed
+
+- must have a session
+
+## ↓
+
+- response with amount of books, amount of instances, amount borrowed in total and list of unique books with their basic info
+
 
 #### PUT /api/bookInstance/add
 
@@ -216,7 +232,7 @@ User must be an admin and there must be no instances of that book.
 
 ## ↓
 
-- response and book request ends, instance changes owner
+- response and book request ends, instance changes owner, counters are updated
 
 ### Test calls:
 
