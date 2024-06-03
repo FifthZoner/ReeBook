@@ -213,4 +213,94 @@ module.exports = function(app) {
         }
     });
 
+    app.put("/api/bookReturn/add", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to add a book!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { instanceID } = req.body;
+            const bookCheck = await BookInstanceCollection.findOne({ "_id": instanceID });
+            if (bookCheck === null || bookCheck === undefined) {
+                console.error("Book with that id doesn't exist!");
+                res.status(500).json({ error: "Book info for that id does not exist!" });
+                return;
+            }
+            if (bookCheck.holderID === "") {
+                console.error("Rried to return returned book!");
+                res.status(500).json({ error: "Cannot return a free book!" });
+                return;
+            }
+            if (bookCheck.holderID !== req.session.userId) {
+                console.error("Tried to return a book that held by someone else");
+                console.log(bookCheck.holderID, req.session.userId)
+                res.status(500).json({ error: "User does not currently hold that book!" });
+                return;
+            }
+            const requestCheck = await BookRequestCollection.findOne({ "instanceID": instanceID, "askerID" : req.session.userId });
+            if (requestCheck !== null) {
+                console.error("User attempted to duplicate request!");
+                res.status(500).json({ error: "Cannot submit the request twice!" });
+                return;
+            }
+            const request = new BookRequestCollection(
+                {
+                    "instanceID": instanceID, "askerID": req.session.userId, "targetID": bookCheck.ownerID,
+                    "requestDate": new Date(), "days": 0, "state" : 3
+                })
+            await request.save();
+
+            res.status(200).json({ "response": "Added a new return request!" });
+        }
+        catch (err) {
+            console.error("Error adding return request:", err);
+            res.status(500).json({ error: "Error when adding return request!" });
+        }
+    });
+
+    app.post("/api/bookReturn/confirm", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to confirm return!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const { requestID } = req.body;
+            const request = await BookRequestCollection.findOne({ "_id": requestID });
+            if (request === undefined || request == null) {
+                console.error("User tried to confirm non existent request!");
+                res.status(500).json({ error: "That request does not exist!" });
+                return;
+            }
+            if (request.state !== 3) {
+                console.error("User tried to confirm non confirmable request!");
+                res.status(500).json({ error: "That request has the wrong state to confirm!" });
+                return;
+            }
+            if (request.targetID !== req.session.userId) {
+                console.error("User is not the author of this request!");
+                console.log(request.targetID, req.session.userId)
+                res.status(500).json({ error: "Not the target of the request!" });
+                return;
+            }
+
+            const instance = await BookInstanceCollection.findOne({"_id" : request.instanceID});
+            if (instance == null) {
+                console.error("User tried to confirm request with wrong instance!");
+                res.status(500).json({ error: "That instance does not exist!" });
+                return;
+            }
+            instance.holderID = "";
+            instance.updateOne(instance)
+            res.status(200).json({ "response": "Confirmed return!" });
+        }
+        catch (err) {
+            console.error("Error confirming return:", err);
+            res.status(500).json({ error: "Error when confirming return request!" });
+        }
+    });
+
 }

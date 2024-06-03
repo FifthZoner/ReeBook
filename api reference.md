@@ -256,6 +256,23 @@ User must be an admin and there must be no instances of that book.
 
 - response and book request ends, instance changes owner, counters are updated
 
+#### PUT /api/bookReturn/add
+
+- String instanceID: \<ID of the book info\>
+
+## ↓
+
+- response and book return request is added or not if there were issues
+
+#### POST /api/bookReturn/confirm
+
+- String requestID: \<id of the request\>
+- must be the owner of requested book
+
+## ↓
+
+- response and book return accepted, book is assigned back to owner
+
 ### Test calls:
 
 #### GET /api
