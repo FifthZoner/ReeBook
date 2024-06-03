@@ -7,7 +7,7 @@ const Main = () => {
   return (
     <div className=" overflow-auto md:pl-60 pl-16 bg-gray-100 h-screen">
       <Sidebar />
-      <Borrow />
+      <Borrow  />
     </div>
   );
 };

@@ -6,7 +6,7 @@ const lendBooks = () => {
 
   useEffect(() => {
     getBooks();
-  }, []);
+  }, [books]);
 
   const getBooks = async () => {
     try {
@@ -27,7 +27,6 @@ const lendBooks = () => {
 
       const result = await response.json();
       setBooks(result.uniqueBooks);
-      console.log(result.uniqueBooks);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
     }
@@ -47,7 +46,7 @@ const lendBooks = () => {
   });
   return (
     <div>
-      <div className="flex flex-wrap justify-evenly">{booksList}</div>
+      <div className="flex flex-wrap items-center justify-center">{booksList}</div>
     </div>
   );
 };

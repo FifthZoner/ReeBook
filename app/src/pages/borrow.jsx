@@ -5,12 +5,12 @@ const Lend = () => {
 
   return (
     <div className="">
-        <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center sm:justify-normal">
-          <div className="flex flex-wrap justify-evenly">
-            <BorrowBooks />
-          </div>
-        </div>
+    <div className="flex flex-row flex-wrap sm:flex-nowrap justify-center sm:justify-normal">
+      <div className="flex flex-wrap justify-evenly">
+      <BorrowBooks />
       </div>
+    </div>
+  </div>
   );
 };
 
