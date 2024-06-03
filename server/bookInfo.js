@@ -62,6 +62,52 @@ module.exports = function(app) {
         }
     });
 
+    app.put("/api/bookInfo/addFullAndInstance", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({_id : req.session.userId});
+            if (user === undefined || user == null) {
+                console.error("User without session tried to add a book!");
+                res.status(512).json({error: "Could not get user info! Is session valid?"});
+                return;
+            }
+            const { name, author,  isbn, imageLink, description, releaseDate, releasePlace, distributor, tag0, tag1, tag2} = req.body;
+            console.log(req.body)
+            const book = new BookInfoCollection(
+                {"identification.name" : name,
+                    "identification.author" : author,
+                    "identification.isbn" : isbn,
+                    "identification.imageLink" : imageLink,
+                    "details.description" : description,
+                    "details.releaseDate" : releaseDate,
+                    "details.releasePlace" : releasePlace,
+                    "details.distributor" : distributor,
+                    "identification.tags.0" : tag0,
+                    "identification.tags.1" : tag1,
+                    "identification.tags.2" : tag2
+                })
+            await book.save();
+
+            const bookCheck = await BookInfoCollection.findOne({ "_id" : book._id });
+            console.log(bookCheck, book._id);
+            if (bookCheck === null || bookCheck === undefined) {
+                console.error("Book with that id doesn't exist!");
+                res.status(500).json({ error: "Error when adding instance after info!" });
+                return;
+            }
+            const book2 = new BookInstanceCollection(
+                {
+                    "bookID": book._id, "ownerID" : user._id
+                })
+            await book2.save();
+
+            res.status(256).json({ "response": "Added a new book and instance to user!" });
+        }
+        catch (err) {
+            console.error("Error when adding book:", err);
+            res.status(512).json({ error: "Error when adding!" });
+        }
+    });
+
     app.patch("/api/bookInfo/edit", bodyParser.json(), async (req, res) => {
         try {
             const user = await UserCollection.findOne({_id : req.session.userId});

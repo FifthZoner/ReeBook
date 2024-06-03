@@ -84,6 +84,28 @@ Any user can add a book, tag0 will have the most weight in the algorithm.
 - response
 - a book with full info is added
 
+#### PUT /api/bookInfo/addFullAndInstance
+
+Any user can add a book, tag0 will have the most weight in the algorithm probably.
+
+- name: \<book name\>
+- author: \<book author>
+- isbn: \<book isbn or any other code>
+- imageLink: \<book imageLink for the tile/details>
+- description: \<book long description>
+- releaseDate: \<book release date>
+- releasePlace: \<book release place>
+- distributor: \<book distributor name>
+- tag0: \<book tag 0>
+- tag1: \<book tag 1>
+- tag2: \<book tag 2>
+
+## ↓
+
+- response
+- a book with full info is added
+- an instance of that book is given to the user
+
 #### GET /api/bookInfo/getBasics
 
 ## ↓
