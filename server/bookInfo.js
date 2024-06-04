@@ -193,12 +193,24 @@ module.exports = function(app) {
     // gives back a list of book basic infos, for now all, limits will be added later
     app.get("/api/bookInfo/getBasics", bodyParser.json(), async (req, res) => {
         try {
-            const books = await BookInfoCollection.find({});
-            let infos = [];
+            const books = await BookInstanceCollection.find({"holderID" : ""});
+            let lendables = [];
             for (let n = 0; n < books.length; n++) {
-                infos.push([books[n].identification, {"_id" : books[n]._id}]);
+                const owner = await UserCollection.findOne({"_id" : books[n].ownerID});
+                if (owner === null) {
+                    console.error("Owner error!");
+                    res.status(500).json({ error: "Internal error!" });
+                    return;
+                }
+                const info = await BookInfoCollection.findOne({"_id" : books[n].bookID})
+                if (info === null) {
+                    console.error("Info error!");
+                    res.status(500).json({ error: "Internal error!" });
+                    return;
+                }
+                lendables.push({"identification" : info.identification, "owner" : owner.credentials.nickname, "instanceID" : books[n]._id})
             }
-            res.json(infos);
+            res.json(lendables);
         }
         catch (err) {
             console.error("Error when returning book info list:", err);
