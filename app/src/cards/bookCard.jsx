@@ -49,6 +49,9 @@ export default function BookCard(props) {
                 {props.borrow && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleReturnRequest(props.id)}>
                     RETURN 
                 </button>}
+                {props.get && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleGetRequest(props.id)}>
+                    GET ✅
+                </button>}
             </div>
         </div>
     </div>
