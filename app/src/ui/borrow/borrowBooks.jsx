@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BookCard from "../../cards/bookCard";
+import NoBooks from "../noBooks";
 
 const BorrowBooks = () => {
   const [books, setBooks] = useState([]);
@@ -39,7 +40,7 @@ const BorrowBooks = () => {
     <div>
       {booksAmount === 0 ? (
         <div className="flex flex-wrap justify-evenly">
-          <h1>Cannot find any books</h1>
+          <NoBooks />
         </div>
       ) : (
         <div className="flex flex-wrap justify-evenly">
