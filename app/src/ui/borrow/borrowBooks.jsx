@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import BookCard from "../../cards/bookCard"
+import BookCard from "../../cards/bookCard";
+import NoBooks from "../noBooks";
 
-const lendBooks = () => {
+const BorrowBooks = () => {
   const [books, setBooks] = useState([]);
+  const [booksAmount, setBooksAmount] = useState(0);
 
   useEffect(() => {
     getBooks();
   }, []);
 
-  //use API for borrowed books
   const getBooks = async () => {
     try {
       const response = await fetch(
@@ -27,28 +28,36 @@ const lendBooks = () => {
       }
 
       const result = await response.json();
-      setBooks(result.uniqueBooks);
+      console.log(result);
+      setBooks(result.instances);
+      setBooksAmount(result.booksBorrowed);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
     }
   };
 
-  const booksList = books.map((book) => {
-    return (
-      <BookCard
-        key={book.bookID}
-        title={book.bookInfo.name}
-        author={book.bookInfo.author}
-        img={book.bookInfo.imageLink}
-        borrow={true}
-      />
-    );
-  });
   return (
     <div>
-      <div className="flex flex-wrap justify-evenly">{booksList}</div>
+      {booksAmount === 0 ? (
+        <div className="flex flex-wrap justify-evenly">
+          <NoBooks />
+        </div>
+      ) : (
+        <div className="flex flex-wrap justify-evenly">
+          {books.map((book) => (
+            <BookCard
+              key={book.instanceID}
+              id={book.instanceID}
+              title={book.bookInfo.name}
+              author={book.bookInfo.author}
+              img={book.bookInfo.imageLink}
+              borrow={true}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-export default lendBooks;
+export default BorrowBooks;

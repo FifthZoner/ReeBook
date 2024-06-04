@@ -1,39 +1,36 @@
 import React from "react";
 
-export default function BookCard(props) {
-
-    const handleReturnRequest = async (instancesID) => {
-        try {
-            const response = await fetch("http://localhost:5000/api/bookReturn/add", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    instancesID,
-                }),
-                credentials: 'include',
-            });
-            console.log(1)
-            if (!response.ok) {
+const handleReturnRequest = async (instanceID) => {
+    try {
+        const response = await fetch("http://localhost:5000/api/returnBook", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                instanceID,
+            }),
+            credentials: 'include',
+        });
+        console.log(1)
+        if (!response.ok) {
             console.log(2)
-
-                console.error("Return request failed");
-                throw new Error("Return request failed");
-            } else {
-            console.log(3)
-
-                window.location.href = "/main";
-            }
-        } catch (err) {
-            console.log(4)
-            
-            console.error("Error:", err);
-            setError("Error");
+            console.log(instanceID)
+            console.error("Return request failed");
+            throw new Error("Return request failed");
+        } else {
+        console.log(3)
+            window.location.href = "/main";
         }
-    };
-    
-    
+    } catch (err) {
+        console.log(4)
+        
+        console.error("Error:", err);
+        setError("Error");
+    }
+};
+
+export default function BookCard(props) {
   return (
     <div>
         <div className="bg-white mx-2 md:mx-4 my-2 w-36 md:w-[200px] py-4 px-5 md:py-6 md:px-8 rounded-xl inline-block text-lg text-center font-semibold drop-shadow-xl">
@@ -49,8 +46,8 @@ export default function BookCard(props) {
                         <p className="text-xs text-white font-semibold px-2">Unavailable</p>
                     </div>
                 </div>}
-                {props.borrow && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={handleReturnRequest(props.id)}>
-                    RETURN
+                {props.borrow && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleReturnRequest(props.id)}>
+                    RETURN 
                 </button>}
             </div>
         </div>
