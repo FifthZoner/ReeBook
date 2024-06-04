@@ -227,7 +227,7 @@ User must be an admin and there must be no instances of that book.
 
 ## ↓
 
-- response and book request accepted
+- response and book request accepted, book is transferred at this point
 
 #### POST /api/bookRequest/decline
 
@@ -238,40 +238,13 @@ User must be an admin and there must be no instances of that book.
 
 - response and book request dropped
 
-#### POST /api/bookRequest/confirmReceived
-
-- String requestID: \<id of the request\>
-- must be the creator of request, to be used when requester gets the book
-
-## ↓
-
-- response and book request proceeds
-
-#### POST /api/bookRequest/confirmGiven
-
-- String requestID: \<id of the request\>
-- must be the owner of the book, confirming that you gave the book to the other person
-
-## ↓
-
-- response and book request ends, instance changes owner, counters are updated
-
-#### PUT /api/bookReturn/add
+#### PUT /api/returnBook
 
 - String instanceID: \<ID of the book info\>
 
 ## ↓
 
-- response and book return request is added or not if there were issues
-
-#### POST /api/bookReturn/confirm
-
-- String requestID: \<id of the request\>
-- must be the owner of requested book
-
-## ↓
-
-- response and book return accepted, book is assigned back to owner
+- response and book return in processed
 
 ### Test calls:
 

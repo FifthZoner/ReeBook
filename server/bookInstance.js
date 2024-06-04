@@ -1,4 +1,4 @@
-const {BookInstanceCollection, BookInfoCollection, UserCollection} = require("./database");
+const {BookInstanceCollection, BookInfoCollection, UserCollection, BookRequestCollection} = require("./database");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 module.exports = function(app) {
@@ -86,6 +86,7 @@ module.exports = function(app) {
             }
             const instancesAmount = instances.length;
             let lentAmount = 0;
+            let pendingAmount = 0;
             let uniqueBooks = [];
             for (let n = 0; n < instancesAmount; n++) {
                 let addLent = 0;
@@ -98,6 +99,17 @@ module.exports = function(app) {
                     if (m[0] == instances[n].bookID) {
                         m[1]++;
                         m[2] += addLent;
+                        const request = await BookRequestCollection.find({"instanceID" : instances[n]._id})
+                        let state = "available";
+                        if (request.length !== 0) {
+                            state = "pending";
+                            pendingAmount += 1;
+                            m[4] += 1;
+                        }
+                        if (instances[n].holderID !== "") {
+                            state = "lent"
+                        }
+                        m[3].push({ "instanceID" : instances[n]._id, "isLent" : state})
                         addBook = false;
                         break;
                     }
@@ -109,11 +121,22 @@ module.exports = function(app) {
                         res.status(500).json({ error: "An internal problem with getting book info appeared!" });
                         return;
                     }
-                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "lentAmount" : addLent})
+                    const request = await BookRequestCollection.find({"instanceID" : instances[n]._id})
+                    let state = "available"
+                    let pend = 0;
+                    if (request.length !== 0) {
+                        state = "pending"
+                        pendingAmount += 1
+                        pend = 1;
+                    }
+                    if (instances[n].holderID !== "") {
+                        state = "lent"
+                    }
+                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "lentAmount" : addLent, "instances" : [{ "instanceID" : instances[n]._id, "isLent" : state}], "pendingAmount" : pend})
                 }
             }
 
-            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, "lentAmount": lentAmount, uniqueBooks });
+            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, "lentAmount": lentAmount, "pendingAmount" : pendingAmount, uniqueBooks });
         }
         catch (err) {
             console.error("Error when returning user instances:", err);
@@ -140,16 +163,11 @@ module.exports = function(app) {
             let lentAmount = 0;
             let uniqueBooks = [];
             for (let n = 0; n < instancesAmount; n++) {
-                let addLent = 0;
-                if (instances[n].ownerID !== instances[n].holderID && instances[n].holderID !== "") {
-                    lentAmount++;
-                    addLent = 1;
-                }
                 let addBook = true;
                 for (m in uniqueBooks) {
                     if (m[0] == instances[n].bookID) {
                         m[1]++;
-                        m[2] += addLent;
+                        m[3].push(instances[n]._id)
                         addBook = false;
                         break;
                     }
@@ -161,11 +179,11 @@ module.exports = function(app) {
                         res.status(400).json({ error: "An internal problem with getting book info appeared!" });
                         return;
                     }
-                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "lentAmount" : addLent})
+                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "instances" : [instances[n]._id]})
                 }
             }
 
-            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, "lentAmount": lentAmount, uniqueBooks });
+            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, uniqueBooks });
         }
         catch (err) {
             console.error("Error when returning user borrowed instances:", err);
