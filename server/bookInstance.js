@@ -156,7 +156,7 @@ module.exports = function(app) {
             const instances = await BookInstanceCollection.find({ "holderID" : req.session.userId });
             if (instances.length === 0) {
                 console.log("User with no books borrowed");
-                res.status(200).json({ "booksAmount" : 0, "instancesAmount": 0, "lentAmount": 0 });
+                res.status(200).json({ "instancesAmount": instancesAmount, "instances" : [] });
                 return;
             }
             const instancesAmount = instances.length;
