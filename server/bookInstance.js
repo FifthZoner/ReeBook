@@ -160,30 +160,18 @@ module.exports = function(app) {
                 return;
             }
             const instancesAmount = instances.length;
-            let lentAmount = 0;
-            let uniqueBooks = [];
+            let books = [];
             for (let n = 0; n < instancesAmount; n++) {
-                let addBook = true;
-                for (m in uniqueBooks) {
-                    if (m[0] == instances[n].bookID) {
-                        m[1]++;
-                        m[3].push(instances[n]._id)
-                        addBook = false;
-                        break;
-                    }
+                bookInfo = await BookInfoCollection.findOne({"_id" : instances[n].bookID})
+                if (bookInfo === undefined || bookInfo == null) {
+                    console.error("Cannot get book info!");
+                    res.status(400).json({ error: "An internal problem with getting book info appeared!" });
+                    return;
                 }
-                if (addBook) {
-                    bookInfo = await BookInfoCollection.findOne({"_id" : instances[n].bookID})
-                    if (bookInfo === undefined || bookInfo == null) {
-                        console.error("Cannet get book info!");
-                        res.status(400).json({ error: "An internal problem with getting book info appeared!" });
-                        return;
-                    }
-                    uniqueBooks.push({"bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification, "totalAmount" : 1, "instances" : [instances[n]._id]})
-                }
+                books.push({"instanceID" : instances[n]._id, "bookID" : instances[n].bookID, "bookInfo" : bookInfo.identification})
             }
 
-            res.status(200).json({ "booksAmount" : uniqueBooks.length, "instancesAmount": instancesAmount, uniqueBooks });
+            res.status(200).json({ "instancesAmount": instancesAmount, "instances" : books });
         }
         catch (err) {
             console.error("Error when returning user borrowed instances:", err);
