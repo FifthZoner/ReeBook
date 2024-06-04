@@ -20,12 +20,12 @@ const lendBooks = () => {
           credentials: "include",
         }
       );
-
       if (!response.ok) {
         throw new Error("Error in fetching book instances");
       }
 
       const result = await response.json();
+      console.log(result)
       setBooks(result.uniqueBooks);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
@@ -35,7 +35,7 @@ const lendBooks = () => {
   const booksList = books.map((book) => {
     return (
       <BookCard
-        key={book.bookID}
+        id={book.bookID}
         title={book.bookInfo.name}
         author={book.bookInfo.author}
         img={book.bookInfo.imageLink}
