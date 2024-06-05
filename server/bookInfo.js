@@ -193,7 +193,7 @@ module.exports = function(app) {
     // gives back a list of book basic infos, for now all, limits will be added later
     app.get("/api/bookInfo/getBasics", bodyParser.json(), async (req, res) => {
         try {
-            const books = await BookInstanceCollection.find({"holderID" : ""});
+            const books = await BookInstanceCollection.find({});
             let lendables = [];
             for (let n = 0; n < books.length; n++) {
                 const owner = await UserCollection.findOne({"_id" : books[n].ownerID});
@@ -208,7 +208,7 @@ module.exports = function(app) {
                     res.status(500).json({ error: "Internal error!" });
                     return;
                 }
-                lendables.push({"identification" : info.identification, "owner" : owner.credentials.nickname, "instanceID" : books[n]._id})
+                lendables.push({"identification" : info.identification, "owner" : owner.credentials.nickname, "instanceID" : books[n]._id, "isAvaliable" : (books[n].holderID === "") })
             }
             res.json(lendables);
         }
