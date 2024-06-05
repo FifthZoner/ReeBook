@@ -40,7 +40,7 @@ export default function LoginCard({ toggleLogin }) {
         throw new Error("Login failed");
       }
       else{
-        window.location.href = "/main";
+        window.location.href = "/books";
       }
     } catch (err) {
       setError("Wrong pass or login");

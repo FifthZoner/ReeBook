@@ -36,10 +36,14 @@ const LendState = () => {
 
   useEffect(() => {
      getBooks()
-   }, []);
+   }, [booksCount]);
 
   const lentWidth = (booksCount.lent / booksCount.all) * 100;
   const waitingWidth = (booksCount.waiting / booksCount.all) * 100;
+  let oneSided = false;
+  if(booksCount.waiting===0 || booksCount.lent===0){
+    oneSided = true;
+  }
 
   return (
     <div className="">
@@ -47,13 +51,13 @@ const LendState = () => {
         <h1 className=" text-black">Your books status</h1>
         <div className={`flex flex-row px-10 ${booksCount.all!==0 ? 'flex' : 'hidden'}`}>
           <div
-            className={` bg-gradient-to-r from-lime-600 to-lime-500 h-10 border-r drop-shadow-xl flex justify-center items-center ${booksCount.waiting===0 ? 'rounded-full' : 'rounded-l-full'}`} 
+            className={` bg-gradient-to-r from-lime-600 to-lime-500 h-10 border-r drop-shadow-xl flex justify-center items-center ${oneSided ? 'rounded-full' : 'rounded-l-full'}`} 
             style={{ width: `${waitingWidth}%` }}
           >
-            <h1 className={`${booksCount.waiting===0 ? 'hidden' : 'block'}`}>Waiting: {booksCount.waiting}</h1>
+            <h1 className={`${booksCount.waiting===0 ? 'hidden' : 'block'}`}>Available: {booksCount.waiting}</h1>
           </div>
           <div
-            className={` bg-gradient-to-tr from-red-500 to-red-600 h-10 rounded-r-full border-l drop-shadow-xl flex justify-center items-center ${booksCount.lent===0 ? 'rounded-full' : 'rounded-r-full'}`}
+            className={` bg-gradient-to-tr from-red-500 to-red-600 h-10 rounded-r-full border-l drop-shadow-xl flex justify-center items-center ${oneSided ? 'rounded-full' : 'rounded-r-full'}`}
             style={{ width: `${lentWidth}%` }}
           >
             <h1 className={`${booksCount.lent===0 ? 'hidden' : 'block'}`}>Lent:: {booksCount.lent}</h1>

@@ -25,7 +25,6 @@ const lendBooks = () => {
       }
 
       const result = await response.json();
-      console.log(result)
       setBooks(result.uniqueBooks);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
@@ -45,9 +44,7 @@ const lendBooks = () => {
     );
   });
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-center">{booksList}</div>
-    </div>
+      <div className="flex flex-wrap justify-center">{booksList}</div>
   );
 };
 

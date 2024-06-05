@@ -68,31 +68,21 @@ export default function Sidebar() {
         <img src={logo} className="md:w-12 md:h-12 md:m-4"></img>
         <ul className={isActive ? onStyle[1] : offStyle[1]}>
           <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">Books</Link>
+            <Link to="/books">Books</Link>
           </li>
           <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">
-              <p>Overview</p>
+            <Link to="/lent">
+              <p>Lent</p>
             </Link>
           </li>
           <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">
-              <p>Rent</p>
+            <Link to="/borrowed">
+              <p>Borrowed</p>
             </Link>
           </li>
           <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">
-              <p>Lend</p>
-            </Link>
-          </li>
-          <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">
-              <p>History</p>
-            </Link>
-          </li>
-          <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
-            <Link to="#">
-              <p>Settings</p>
+            <Link to="/profile">
+              <p>Profile</p>
             </Link>
           </li>
           <li
@@ -106,32 +96,22 @@ export default function Sidebar() {
         </ul>
         <ul className={isActive ? onStyle[2] : offStyle[2]}>
           <li className="p-2 md:ml-6 ">
-            <Link to="#">
+            <Link to="/books">
               <FaBook />
             </Link>
           </li>
           <li className="p-2 md:ml-6 ">
-            <Link to="#">
-              <GrOverview />
-            </Link>
-          </li>
-          <li className="p-2 md:ml-6 ">
-            <Link to="#">
+            <Link to="/lent">
               <BsFillCalendar2PlusFill />
             </Link>
           </li>
           <li className="p-2 md:ml-6">
-            <Link to="#">
+            <Link to="/borrowed">
               <BsCalendarWeekFill />
             </Link>
           </li>
           <li className="p-2 md:ml-6">
-            <Link to="#">
-              <FaHistory />
-            </Link>
-          </li>
-          <li className="p-2 md:ml-6">
-            <Link to="#">
+            <Link to="/profile">
               <IoMdSettings />
             </Link>
           </li>
