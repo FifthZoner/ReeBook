@@ -3,10 +3,11 @@ import BookCard from "../../cards/bookCard"
 
 const lendBooks = () => {
   const [books, setBooks] = useState([]);
+  const [booksAmount, setBooksAmount] = useState(0);
 
   useEffect(() => {
     getBooks();
-  }, [books]);
+  }, []);
 
   const getBooks = async () => {
     try {
@@ -26,6 +27,7 @@ const lendBooks = () => {
 
       const result = await response.json();
       setBooks(result.uniqueBooks);
+      setBooksAmount(books.length);
     } catch (error) {
       console.error("Error when handling the GET request:", error);
     }

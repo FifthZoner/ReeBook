@@ -30,6 +30,35 @@ const handleReturnRequest = async (instanceID) => {
     }
 };
 
+const handleGetRequest = async (instanceID, days) => {
+    try {
+        const response = await fetch("http://localhost:5000/api/bookRequest/add", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                instanceID,
+                days
+            }),
+            credentials: 'include',
+        });
+        console.log(1)
+        if (!response.ok) {
+            console.log(2)
+            console.error("Book request failed");
+            throw new Error("Book request failed with status: " + response.status);
+        } else {
+            const responseData = await response.json();
+            console.log(3)
+            console.log(responseData);
+        }
+    } catch (err) {
+        console.log(4)
+        console.error("Error:", err);
+    }
+};
+
 export default function BookCard(props) {
   return (
     <div>
@@ -49,7 +78,7 @@ export default function BookCard(props) {
                 {props.borrow && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleReturnRequest(props.id)}>
                     RETURN 
                 </button>}
-                {props.get && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleGetRequest(props.id)}>
+                {props.get && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleGetRequest(props.id, 5)}>
                     GET ✅
                 </button>}
             </div>
