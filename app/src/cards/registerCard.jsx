@@ -19,7 +19,7 @@ export default function registerCard({toggleLogin}) {
           },
           body: JSON.stringify({
             email: email,
-            passwordHash: password,
+            password: password,
             nickname: login,
           }),
         });

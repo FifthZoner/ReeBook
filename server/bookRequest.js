@@ -1,5 +1,5 @@
 //fconst session = require("express-session");
-const {BookInstanceCollection, BookRequestCollection, UserCollection} = require("./database");
+const {BookInstanceCollection, BookRequestCollection, UserCollection, BookInfoCollection} = require("./database");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 module.exports = function(app) {
@@ -166,6 +166,49 @@ module.exports = function(app) {
             bookCheck.holderID = "";
             await bookCheck.updateOne(bookCheck)
             res.status(200).json({ "response": "Book returned!" });
+        }
+        catch (err) {
+            console.error("Error adding return request:", err);
+            res.status(500).json({ error: "Error when adding return request!" });
+        }
+    });
+
+    app.get("/api/bookRequest/getAll", bodyParser.json(), async (req, res) => {
+        try {
+            const user = await UserCollection.findOne({ _id: req.session.userId });
+            if (user === undefined || user == null) {
+                console.error("User without session tried to add a book!");
+                res.status(500).json({ error: "Could not get user info! Is session valid?" });
+                return;
+            }
+            const requests = await BookRequestCollection.find({ "targetID": req.session.userId });
+            if (requests === undefined) {
+                console.error("Error getting requests!");
+                res.status(500).json({ error: "Internal server error!" });
+                return;
+            }
+            let tab = []
+
+            for (let n = 0; n < requests.length; n++) {
+                const asker = await UserCollection.findOne({"_id" : requests[n].askerID})
+                if (asker == null) {
+                    console.error("Error getting asker!");
+                    res.status(500).json({ error: "Internal server error!" });
+                }
+                const instance = await BookInstanceCollection.findOne({"_id" : requests[n].instanceID})
+                if (instance == null) {
+                    console.error("Error getting instance!");
+                    res.status(500).json({ error: "Internal server error!" });
+                }
+                const info = await BookInfoCollection.findOne({_id : instance.bookID})
+                if (info == null) {
+                    console.error("Error getting info!");
+                    res.status(500).json({ error: "Internal server error!" });
+                }
+
+                tab.push({"requestID" : requests[n]._id, "instanceID" : requests[n].instanceID, "date" : requests[n].requestDate, "days" : requests[n].days, "nick" : asker.credentials.nickname, "info" : info.identification} )
+            }
+            res.status(200).json(tab);
         }
         catch (err) {
             console.error("Error adding return request:", err);

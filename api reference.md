@@ -246,6 +246,15 @@ User must be an admin and there must be no instances of that book.
 
 - response and book return in processed
 
+#### GET /api/bookRequest/getAll
+
+- must have a session
+
+## ↓
+
+- response with request id, book info and instance id
+
+
 ### Test calls:
 
 #### GET /api
