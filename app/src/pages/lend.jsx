@@ -8,10 +8,12 @@ const Lend = () => {
   return (
     <div className="overflow-auto md:pl-60 pl-16 bg-gray-100 h-screen">
       <Sidebar />
-      <LendState />
-      <div className="flex flex-row flex-wrap">
-        <LendForm />
-        <LendBooks />
+      <div className="flex flex-col">
+        <LendState />
+        <div className="flex flex-row flex-wrap">
+          <LendForm />
+          <LendBooks />
+        </div>
       </div>
     </div>
   );

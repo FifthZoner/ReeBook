@@ -5,7 +5,8 @@ import Welcome from "./pages/welcome.jsx";
 import Main from "./pages/main.jsx";
 import Borrow from "./pages/borrow.jsx";
 import Lend from "./pages/lend.jsx";
-
+import Profile from "./pages/profile.jsx";
+import Notifications from "./pages/notifications.jsx";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Welcome /> },
@@ -38,7 +39,7 @@ export const router = createBrowserRouter([
     path: "/notifications",
     element: (
       <ProtectedRoute>
-        <Main />
+        <Notifications />
       </ProtectedRoute>
     ),
   },
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
     path: "/profile",
     element: (
       <ProtectedRoute>
-        <Main />
+        <Profile />
       </ProtectedRoute>
     ),
   },

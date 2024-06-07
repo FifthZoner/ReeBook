@@ -81,6 +81,11 @@ export default function Sidebar() {
             </Link>
           </li>
           <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
+            <Link to="/notifications">
+              <p>Notifications</p>
+            </Link>
+          </li>
+          <li className="p-1 m-1 md:ml-6 hover:border-l-4 border-purple-400 duration-150">
             <Link to="/profile">
               <p>Profile</p>
             </Link>
