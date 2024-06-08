@@ -31,6 +31,7 @@ const BorrowBooks = () => {
       console.log(result);
       setBooks(result.instances);
       setBooksAmount(result.booksBorrowed);
+      console.log(booksAmount)
     } catch (error) {
       console.error("Error when handling the GET request:", error);
     }
@@ -38,7 +39,7 @@ const BorrowBooks = () => {
 
   return (
     <div>
-      {booksAmount === 0 ? (
+      {booksAmount === undefined ? (
         <div className="flex flex-wrap justify-evenly">
           <NoBooks />
         </div>

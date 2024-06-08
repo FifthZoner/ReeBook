@@ -50,7 +50,6 @@ const LendForm = () => {
   };
 
   return (
-    <div>
       <div className=" bg-white my-2 py-6 px-8 mx-4 rounded-xl inline-block text-lg text-center font-semibold drop-shadow-xl">
         <form onSubmit={handleSubmit} className="m-1 [&>*]:p-1">
           <p>Name</p>
@@ -97,7 +96,6 @@ const LendForm = () => {
           <button type="submit" className="w-full bg-purple-900 text-white py-2 rounded-md hover:bg-purple-950 my-2 transition duration-300">Add a Book</button>
         </form>
       </div>
-    </div>
   );
 };
 

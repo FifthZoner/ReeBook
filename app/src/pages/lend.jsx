@@ -10,7 +10,7 @@ const Lend = () => {
       <Sidebar />
       <div className="flex flex-col">
         <LendState />
-        <div className="flex flex-row flex-wrap">
+        <div className="flex flex-row justify-between flex-wrap">
           <LendForm />
           <LendBooks />
         </div>
