@@ -174,45 +174,65 @@ module.exports = function(app) {
     });
 
     app.get("/api/bookRequest/getAll", bodyParser.json(), async (req, res) => {
-        try {
-            const user = await UserCollection.findOne({ _id: req.session.userId });
-            if (user === undefined || user == null) {
-                console.error("User without session tried to add a book!");
-                res.status(500).json({ error: "Could not get user info! Is session valid?" });
-                return;
-            }
-            const requests = await BookRequestCollection.find({ "targetID": req.session.userId });
-            if (requests === undefined) {
-                console.error("Error getting requests!");
+    try {
+        const user = await UserCollection.findOne({ _id: req.session.userId });
+        if (user === undefined || user == null) {
+            console.error("User without session tried to add a book!");
+            res.status(500).json({ error: "Could not get user info! Is session valid?" });
+            return;
+        }
+
+        const requests = await BookRequestCollection.find({ targetID: req.session.userId });
+        if (requests === undefined) {
+            console.error("Error getting requests!");
+            res.status(500).json({ error: "Internal server error!" });
+            return;
+        }
+
+        let tab = [];
+
+        for (let n = 0; n < requests.length; n++) {
+            const asker = await UserCollection.findOne({ _id: requests[n].askerID });
+            if (asker == null) {
+                console.error(`Error getting asker with ID ${requests[n].askerID}!`);
                 res.status(500).json({ error: "Internal server error!" });
                 return;
             }
-            let tab = []
 
-            for (let n = 0; n < requests.length; n++) {
-                const asker = await UserCollection.findOne({"_id" : requests[n].askerID})
-                if (asker == null) {
-                    console.error("Error getting asker!");
-                    res.status(500).json({ error: "Internal server error!" });
-                }
-                const instance = await BookInstanceCollection.findOne({"_id" : requests[n].instanceID})
-                if (instance == null) {
-                    console.error("Error getting instance!");
-                    res.status(500).json({ error: "Internal server error!" });
-                }
-                const info = await BookInfoCollection.findOne({_id : instance.bookID})
-                if (info == null) {
-                    console.error("Error getting info!");
-                    res.status(500).json({ error: "Internal server error!" });
-                }
-
-                tab.push({"requestID" : requests[n]._id, "instanceID" : requests[n].instanceID, "date" : requests[n].requestDate, "days" : requests[n].days, "nick" : asker.credentials.nickname, "info" : info.identification} )
+            if (!requests[n].instanceID) {
+                console.error(`Missing instanceID in request with ID ${requests[n]._id}`);
+                res.status(500).json({ error: "Internal server error!" });
+                return;
             }
-            res.status(200).json(tab);
+
+            const instance = await BookInstanceCollection.findOne({ _id: requests[n].instanceID });
+            if (instance == null) {
+                console.error(`Error getting instance with ID ${requests[n].instanceID}!`);
+                res.status(500).json({ error: "Internal server error!" });
+                return;
+            }
+
+            const info = await BookInfoCollection.findOne({ _id: instance.bookID });
+            if (info == null) {
+                console.error(`Error getting info for bookID ${instance.bookID}!`);
+                res.status(500).json({ error: "Internal server error!" });
+                return;
+            }
+
+            tab.push({
+                requestID: requests[n]._id,
+                instanceID: requests[n].instanceID,
+                date: requests[n].requestDate,
+                days: requests[n].days,
+                nick: asker.credentials.nickname,
+                info: info.identification
+            });
         }
-        catch (err) {
-            console.error("Error adding return request:", err);
-            res.status(500).json({ error: "Error when adding return request!" });
-        }
-    });
+        res.status(200).json(tab);
+    } catch (err) {
+        console.error("Error adding return request:", err);
+        res.status(500).json({ error: "Error when adding return request!" });
+    }
+});
+
 }

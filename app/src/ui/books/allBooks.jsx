@@ -56,7 +56,7 @@ export default function AllBooks() {
     const filteredBooks = books.filter((book) => {
         const matchesSearchQuery = book.identification.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesAuthor = filterCriteria.author === '' || book.identification.author.toLowerCase().includes(filterCriteria.author.toLowerCase());
-        const matchesAvailability = true; // TODO backend is sleeping
+        const matchesAvailability = book.isAvaliable.toString() === filterCriteria.available.toString();
 
         return matchesSearchQuery && matchesAuthor && matchesAvailability;
     });
@@ -101,7 +101,7 @@ export default function AllBooks() {
             <div className="flex flex-wrap justify-evenly">
                 {currentBooks.length > 0 ? (
                     currentBooks.map((book) => {
-                        console.log(book);
+                        //console.log(book);
                         return (
                             <BookCard
                                 key={book.instanceID}
@@ -109,8 +109,8 @@ export default function AllBooks() {
                                 title={book.identification.name}
                                 author={book.identification.author}
                                 img={book.identification.imageLink}
-                                available={true} // TODO backend is sleeping
-                                get={true} // TODO backend is sleeping
+                                available={book.isAvaliable}
+                                get={book.isAvaliable}
                             />
                         );
                     })

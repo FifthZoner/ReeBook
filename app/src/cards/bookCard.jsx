@@ -1,4 +1,5 @@
 import React from "react";
+import { FaSquarePlus } from "react-icons/fa6";
 
 const handleReturnRequest = async (instanceID) => {
     try {
@@ -67,7 +68,7 @@ export default function BookCard(props) {
             <h1 className="text-sm font-bold overflow-hidden whitespace-nowrap">{props.title ? props.title : "Title"}</h1>
             <p className="text-sm overflow-hidden whitespace-nowrap"><span className="font-semibold">{props.author ? props.author : "Author"}</span></p>
             <div className="flex flex-col justify-center items-center">
-                {!props.borrow && <div>
+                {!props.borrow || !props.get && <div>
                     <div className={props.available ? "bg-lime-600 rounded-full w-24" : "bg-lime-600 rounded-full w-24 hidden"}>
                         <p className="text-xs text-white font-semibold px-1">Available</p>
                     </div>
@@ -79,7 +80,9 @@ export default function BookCard(props) {
                     RETURN 
                 </button>}
                 {props.get && <button className=" text-sm w-32 py-1 my-1 bg-purple-900 rounded-full border border-purple-950 font-semibold text-white" onClick={() => handleGetRequest(props.id, 5)}>
-                    GET ✅
+                    <div className="flex flex-row items-center justify-center gap-2">
+                        <p>GET</p><FaSquarePlus size={18}/>
+                    </div>
                 </button>}
             </div>
         </div>
