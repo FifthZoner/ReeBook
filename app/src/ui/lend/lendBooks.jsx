@@ -43,7 +43,7 @@ const lendBooks = () => {
 
 
   return (
-    <div className="flex flex-wrap justify-center items-center">
+    <div className="flex flex-wrap justify-center items-center max-w-7xl">
       {books && books.length > 0 ? (
         books.map((book) => (
           <BookCard

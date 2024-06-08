@@ -43,7 +43,7 @@ const LendForm = () => {
       if (!response.ok) {
         throw new Error("Error in adding book info");
       }
-      window.location.href = "/lend";
+      window.location.href = "/lent";
     } catch (error) {
       console.error(error);
     }
