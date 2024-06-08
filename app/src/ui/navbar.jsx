@@ -36,8 +36,8 @@ return(
             <img src={logo} alt="logo" className="w-12 h-12 m-4" />
                 <ul className={isActive ?  onStyle[1] : offStyle[1]}>
                     <li className="p-1 md:ml-6 text-center"><Link to="/">Home</Link></li>
-                    <li className="p-1 md:ml-6 text-center"><Link to="#">About</Link></li>
-                    <li className="p-1 md:ml-6 text-center"><Link to="#">Contact</Link></li>
+                    <li className="p-1 md:ml-6 text-center"><a href="#About">About</a></li>
+                    <li className="p-1 md:ml-6 text-center"><a href="#Contact">Contact</a></li>
                     <li className="p-1 md:ml-6 text-center"><Link to="/login">Login</Link></li>
                 </ul>
             <button className="p-4 cursor-pointer bg-transparent border-none md:hidden ml-auto" onClick={toggleClass}>
