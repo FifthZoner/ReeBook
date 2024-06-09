@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function NotifyCard(props) {
-  const handleAccept = async (resultID) => {
+  const handleAccept = async (requestID) => {
     try {
       const response = await fetch(
         "http://localhost:5000/api/bookRequest/accept",
@@ -11,7 +11,7 @@ export default function NotifyCard(props) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            resultID,
+            requestID,
           }),
           credentials: "include",
         }
@@ -27,7 +27,7 @@ export default function NotifyCard(props) {
     }
   };
 
-  const handleDecline = async (resultID) => {
+  const handleDecline = async (requestID) => {
     try {
       const response = await fetch(
         "http://localhost:5000/api/bookRequest/decline",
@@ -37,12 +37,11 @@ export default function NotifyCard(props) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            resultID,
+            requestID,
           }),
           credentials: "include",
         }
       );
-      console.log(resultID)
       if (!response.ok) {
         console.error("Book decline failed");
         throw new Error("Book accept decline with status: " + response.status);
