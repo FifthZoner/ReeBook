@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Notificate from "../ui/notifications/notificate";
 import Sidebar from "../ui/sidebar";
+import NotifyCard from "../cards/notifyCard";
+import NoBooks from "../ui/noBooks";
 
 const Notifications = () => {
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
     const getNotifications = async () => {
       try {
@@ -24,22 +26,37 @@ const Notifications = () => {
         }
   
         const result = await response.json();
-        console.log(result)
+        setNotifications(result)
       } catch (error) {
         console.error("Error when handling the GET request:", error);
   
       }
     };
-  
-    getNotifications();
-  
+    getNotifications(); 
+    
   }, []);
-
+  console.log(notifications)
   return (
     <div className="overflow-auto md:pl-60 pl-16 bg-gray-100 h-screen flex justify-center items-center">
       <Sidebar />
 
-        <Notificate />
+      {notifications === undefined ? (
+        <div className="flex flex-wrap justify-evenly">
+          <NoBooks />
+        </div>
+      ) : (
+        <div className="flex flex-col flex-wrap w-full p-8 text-xl">
+          {notifications.map((notification) => (
+            <NotifyCard
+              key={notification.instanceID}
+              id={notification.instanceID}
+              request={notification.requestID}
+              nick={notification.nick}
+              title={notification.info.name}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

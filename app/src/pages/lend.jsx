@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import LendForm from "../ui/lend/lendForm";
-import LendBooks from "../ui/lend/lendBooks";
 import LendState from "../ui/lend/lendState";
 import Sidebar from "../ui/sidebar";
 import BookCard from "../cards/bookCard";
@@ -61,7 +60,7 @@ const Lend = () => {
               />
             ))
           ) : (
-            <div className="flex justify-center items-center">
+            <div className="">
               <NoBooks />
             </div>
           )}
