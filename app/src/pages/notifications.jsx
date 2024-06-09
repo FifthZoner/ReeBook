@@ -24,7 +24,7 @@ const Notifications = () => {
           throw new Error("Error in fetching book instances");
   
         }
-  
+        
         const result = await response.json();
         setNotifications(result)
       } catch (error) {
@@ -50,7 +50,7 @@ const Notifications = () => {
             <NotifyCard
               key={notification.instanceID}
               id={notification.instanceID}
-              request={notification.requestID}
+              requestID={notification.requestID}
               nick={notification.nick}
               title={notification.info.name}
             />
