@@ -40,7 +40,7 @@ const Notifications = () => {
     <div className="overflow-auto md:pl-60 pl-16 bg-gray-100 h-screen flex justify-center items-center">
       <Sidebar />
 
-      {notifications === undefined ? (
+      {notifications.length === 0 ? (
         <div className="flex flex-wrap justify-evenly">
           <NoBooks />
         </div>

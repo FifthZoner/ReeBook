@@ -24,9 +24,11 @@ const LendState = () => {
       }
   
       const result = await response.json();
+      console.log(result)
+
       setBooksCount({
         lent: result.lentAmount,
-        waiting: result.instancesAmount,
+        waiting: result.instancesAmount-result.lentAmount,
         all: result.lentAmount+result.instancesAmount,
       });
     } catch (error) {
@@ -36,7 +38,7 @@ const LendState = () => {
 
   useEffect(() => {
      getBooks()
-   }, [booksCount]);
+   }, []);
 
   const lentWidth = (booksCount.lent / booksCount.all) * 100;
   const waitingWidth = (booksCount.waiting / booksCount.all) * 100;
@@ -60,7 +62,7 @@ const LendState = () => {
             className={` bg-gradient-to-tr from-red-500 to-red-600 h-10 rounded-r-full border-l drop-shadow-xl flex justify-center items-center ${oneSided ? 'rounded-full' : 'rounded-r-full'}`}
             style={{ width: `${lentWidth}%` }}
           >
-            <h1 className={`${booksCount.lent===0 ? 'hidden' : 'block'}`}>Lent:: {booksCount.lent}</h1>
+            <h1 className={`${booksCount.lent===0 ? 'hidden' : 'block'}`}>Lent: {booksCount.lent}</h1>
           </div>
         </div>
       </div>

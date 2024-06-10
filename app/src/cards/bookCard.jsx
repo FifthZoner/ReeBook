@@ -21,7 +21,7 @@ const handleReturnRequest = async (instanceID) => {
             throw new Error("Return request failed");
         } else {
         console.log(3)
-            window.location.href = "/main";
+            window.location.href = "/borrowed";
         }
     } catch (err) {
         console.log(4)
