@@ -29,7 +29,7 @@ const LendState = () => {
       setBooksCount({
         lent: result.lentAmount,
         waiting: result.instancesAmount-result.lentAmount,
-        all: result.lentAmount+result.instancesAmount,
+        all: result.instancesAmount,
       });
     } catch (error) {
       console.error("Error when handling the GET request:", error);

@@ -45,25 +45,29 @@ const Lend = () => {
       <Sidebar />
       <div className="flex flex-col">
         <LendState />
-        <div className="flex flex-row justify-between flex-wrap">
-          <LendForm />
-          {books && books.length > 0 ? (
-            books.map((book) => (
-              <BookCard
-                key={book.bookID}
-                id={book.bookID}
-                title={book.bookInfo.name}
-                author={book.bookInfo.author}
-                img={book.bookInfo.imageLink}
-                available={book.lentAmount === 0}
-                borrow={false}
-              />
-            ))
-          ) : (
-            <div className="">
-              <NoBooks />
-            </div>
-          )}
+        <div className=" flex flex-col md:flex-row items-center md:items-start">
+          <div className=" md:min-w-[300px]">
+            <LendForm />
+          </div>
+          <div className=" flex flex-row flex-wrap justify-center">
+            {books && books.length > 0 ? (
+              books.map((book) => (
+                <BookCard
+                  key={book.bookID}
+                  id={book.bookID}
+                  title={book.bookInfo.name}
+                  author={book.bookInfo.author}
+                  img={book.bookInfo.imageLink}
+                  available={book.lentAmount === 0}
+                  borrow={false}
+                />
+              ))
+            ) : (
+              <div className="">
+                <NoBooks />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
