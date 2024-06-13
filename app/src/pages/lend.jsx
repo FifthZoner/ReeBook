@@ -49,7 +49,7 @@ const Lend = () => {
           <div className=" md:min-w-[300px]">
             <LendForm />
           </div>
-          <div className=" flex flex-row flex-wrap justify-center">
+          <div className=" flex flex-row flex-wrap justify-center ">
             {books && books.length > 0 ? (
               books.map((book) => (
                 <BookCard
@@ -63,7 +63,7 @@ const Lend = () => {
                 />
               ))
             ) : (
-              <div className="">
+              <div className=" mx-auto">
                 <NoBooks />
               </div>
             )}

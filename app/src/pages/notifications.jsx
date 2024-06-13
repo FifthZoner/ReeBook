@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../ui/sidebar";
 import NotifyCard from "../cards/notifyCard";
-import NoBooks from "../ui/noBooks";
+import NoNotifications from "../ui/noNotifications";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -42,7 +42,7 @@ const Notifications = () => {
 
       {notifications.length === 0 ? (
         <div className="flex flex-wrap justify-evenly">
-          <NoBooks />
+          <NoNotifications />
         </div>
       ) : (
         <div className="flex flex-col flex-wrap w-full p-8 text-xl">
